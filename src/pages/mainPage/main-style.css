@@ -9,6 +9,7 @@
         margin-top: -5%;
         padding-top: 5%;
         min-height: 120vh;
+        max-width: 100%;
         position: relative;
     }
 
@@ -128,9 +129,8 @@
         color: #D2B583;
         transition: all ease-in-out 0.8s;
         filter: blur(0.5px);
-        backdrop-filter: blur(5px);
-        position: absolute;
-        bottom: 3%;
+        backdrop-filter: blur(5px); 
+        margin-top: 3%; 
         cursor: pointer;
     }
 
@@ -147,8 +147,7 @@
         background-repeat: no-repeat;
         background-position: center;
         padding: 0;
-        width: 100vw;
-        height: 100vh;
+        width: 100vw; 
         padding-top: -20px;
         position: relative;
         margin-top: -100px;

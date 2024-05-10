@@ -1,3 +1,6 @@
+.app-container{
+  zoom:1; 
+}
 .main-title {
   z-index: 10;
   display: flex;
@@ -59,8 +62,15 @@
   cursor: pointer;
 }
 
+@media only screen and (max-width: 767px) {
+
+}
+
 /* Media query for screens smaller than 768px */
 @media only screen and (max-width: 767px) {
+  .app-container{
+    zoom: 0.76;
+  }
   .button {
     width: 35px;
     /* Adjusted width for smaller screens */

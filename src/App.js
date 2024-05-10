@@ -32,7 +32,7 @@ function App() {
   };
 
   return (
-    <div style={{ position: 'relative', top: '0' }} >
+    <div style={{ position: 'relative', top: '0'   }} className='app-container' >
       <Drawer
         open={isDrawerOpen}
         onClose={toggleDrawer}

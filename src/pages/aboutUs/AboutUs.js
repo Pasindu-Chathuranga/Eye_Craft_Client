@@ -8,6 +8,8 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import { Icon, Radio, RadioGroup, FormControlLabel } from '@mui/material';
+import { API_URL } from '../../const/const/api_url';
+import axios from 'axios';
 
 const AboutUsPage = ({ id, handleDrawer }) => {
     const [showNextSection, setShowNextSection] = useState(false);
@@ -118,6 +120,48 @@ const AboutUsPage = ({ id, handleDrawer }) => {
 
 
 
+    const submitData = async () => {
+        if (formData.customerName == '') {
+            errors.customerName = 'Name is required'
+            return;
+        }
+        if (formData.customerEmail == '') {
+            errors.customerEmail = 'E-mail is required'
+            return;
+        }
+        if (formData.customerContact == '') {
+            errors.customerContact = 'Contact number is required'
+            return;
+        }
+        if (formData.customerAddress == '') {
+            errors.customerAddress = 'Address is required'
+            return;
+        }
+        if (formData.customerCity == '') {
+            errors.customerCity = 'City is required'
+            return;
+        }
+
+        const payload = { 
+            'customer_name': formData.customerName,
+            'customer_email': formData.customerEmail,
+            'customer_address': formData.customerAddress,
+            'customer_phone': formData.customerContact,
+            'customer_city': formData.customerCity,
+            'order_status': 'Pending',
+            'image_url': '',
+            'eye_count': formData.Eye_Count,
+            'print_style': formData.Print_Style,
+            'size': formData.Sizes,
+            'effect': formData.Effects,
+            'frame': formData.Frames,
+            'duo_custom_effects': formData.Duo_Custom_Effects,  
+        }
+
+        const response = await axios.post(API_URL+'/order/add',payload);
+        console.log(response)
+    }
+    
     return (
         <section id={id} className="aboutUs-container" >
             <div className='main-title aboutUs-title' onClick={handleDrawer}>
@@ -234,7 +278,7 @@ const AboutUsPage = ({ id, handleDrawer }) => {
                                     </div>
 
                                     <button className='btn-2' style={{marginTop:'3%'}} type='button' onClick={() => setShowNextSection(false)}>Back</button>
-                                    <button className='btn-2'>Submit</button>
+                                    <button className='btn-2' onClick={submitData}>Submit</button>
 
                                 </div>
                             </div>

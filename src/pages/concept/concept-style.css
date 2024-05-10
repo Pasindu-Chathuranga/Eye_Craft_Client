@@ -104,6 +104,7 @@
     .card-text-2 {
         min-height: 30vh;
         margin-left: 5%;
+        font-size: 25px;
         color: #fff3de;
         /* Adjusted height for mobile */
         margin-top: 5%;
@@ -145,6 +146,7 @@
         width: 100vw;
         height: 100vh;
         margin-top: -22px;
+        padding-top: 2%;
     }
 
     .concept-title {
