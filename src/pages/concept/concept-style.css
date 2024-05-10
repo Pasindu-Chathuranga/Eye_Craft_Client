@@ -141,10 +141,7 @@
 
     /* Default styles for screens larger than 1023px */
     .concept-container {
-        background-image: url('../../images/bg/concept-bg.png');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
+        background-color: #162F48;
         width: 100vw;
         height: 100vh;
         margin-top: -22px;

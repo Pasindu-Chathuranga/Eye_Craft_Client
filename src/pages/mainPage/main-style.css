@@ -6,20 +6,25 @@
         background-size: cover;
         background-repeat: no-repeat;
         background-position: bottom;
+        margin-top: -5%;
+        padding-top: 5%;
+        min-height: 120vh;
+        position: relative;
     }
 
     .mainPage-title {
         margin: 10px 0;
         margin-left: 1%;
         padding-top: 10%;
-        font-size: 30px;
+        font-size: 40px;
+        padding-bottom: 15%;
 
         /* Adjusted margin */
     }
 
     .main-subtitle {
         margin-left: 12%;
-        font-size: 20px;
+        font-size: 30px;
     }
 
     .main-bg-image {
@@ -28,7 +33,7 @@
 
     .main-para {
         min-width: 85%;
-        font-size: 18px;
+        font-size: 25px;
         margin-left: 12%;
         margin-bottom: 10%;
     }
@@ -88,9 +93,11 @@
     }
 
     .main-button {
-        width: 80%;
+        width: 70%;
         /* Adjusted width for tablets */
         margin: 20px auto;
+        margin-right: 10px;
+        bottom: 10%;
         /* Centered and added margin */
         font-size: 24px;
         /* Font size for tablets */
@@ -123,7 +130,7 @@
         filter: blur(0.5px);
         backdrop-filter: blur(5px);
         position: absolute;
-        bottom: 8%;
+        bottom: 3%;
         cursor: pointer;
     }
 
@@ -133,17 +140,23 @@
         animation: pulse 1s;
         box-shadow: #D2B583 0px 0px 3px;
     }
+
+    .main-container {
+        background-image: url('../../images/bg/concept-bg.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        padding-top: -20px;
+        position: relative;
+        margin-top: -100px;
+    }
 }
 
 /* Default styles for screens larger than 1023px */
-.main-container {
-    background-color: #162F48;
-    padding: 0;
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    margin-top: -45px;
-}
+
 
 .mainPage-title {
     display: flex;
@@ -152,6 +165,7 @@
     justify-content: flex-start;
     margin-bottom: 0;
     margin-left: 10%;
+    padding-top: 2%;
 }
 
 .main-bg-image {

@@ -43,10 +43,12 @@ const AboutUsPage = ({ id, handleDrawer }) => {
 
     const onTextChange = (e) => {
         const { name, value } = e.target;
+ 
         setformData(prevData => ({
             ...prevData,
             [name]: value
         }));
+        validateInputs()
         console.log(formData[e.target.name])
     }
 
@@ -78,7 +80,7 @@ const AboutUsPage = ({ id, handleDrawer }) => {
         const errors = {};
 
         // Name validation
-        if (!formData.customerName.trim()) {
+        if (!formData.customerName.trim() || formData.customerName == null) {
             errors.customerName = 'Name is required';
         }
 
@@ -113,6 +115,8 @@ const AboutUsPage = ({ id, handleDrawer }) => {
         // Return true if no errors, false otherwise
         return Object.keys(errors).length === 0;
     };
+
+
 
     return (
         <section id={id} className="aboutUs-container" >
@@ -200,31 +204,36 @@ const AboutUsPage = ({ id, handleDrawer }) => {
                                 <div className='about-form'>
 
                                     <div className='form-group-2'>
-                                        <header className='form-group-header'>Name</header>
+                                        <header className='form-group-header-2'>Name</header>
                                         <input type="text" id="customerName" onChange={onTextChange} value={formData.customerName} name="customerName" placeholder="Enter your name" />
+                                        <span>{errors.customerName ? errors.customerName : ''}</span>
                                     </div>
 
                                     <div className='form-group-2'>
-                                        <header className='form-group-header'>Email</header>
+                                        <header className='form-group-header-2'>Email</header>
                                         <input type="email" id="customerEmail" onChange={onTextChange} value={formData.customerEmail} name="customerEmail" placeholder="Enter your email" />
+                                        <span>{errors.customerEmail ? errors.customerEmail : ''}</span>
                                     </div>
 
                                     <div className='form-group-2'>
-                                        <header className='form-group-header'>Phone Number</header>
+                                        <header className='form-group-header-2'>Phone Number</header>
                                         <input type="tel" id="customerContact" onChange={onTextChange} value={formData.customerContact} name="customerContact" placeholder="Enter your phone number" />
+                                        <span>{errors.customerContact ? errors.customerContact : ''}</span>
                                     </div>
 
                                     <div className='form-group-2'>
-                                        <header className='form-group-header'>Appointment aAddress</header>
+                                        <header className='form-group-header-2'>Appointment aAddress</header>
                                         <textarea id="customerAddress" onChange={onTextChange} name="customerAddress" placeholder="Enter your address">{formData.customerAddress}</textarea>
+                                        <span>{errors.customerAddress ? errors.customerAddress : ''}</span>
                                     </div>
 
-                                    <div className='form-group-2'>
-                                        <header className='form-group-header'>Town</header>
+                                        <div className='form-group-2' style={{ marginBottom: '5%' }}>
+                                            <header className='form-group-header-2'>Town</header>
                                         <input type="text" id="customerCity" onChange={onTextChange} value={formData.customerCity} name="customerCity" placeholder="Enter your town" />
+                                        <span>{errors.customerCity ? errors.customerCity : ''}</span>
                                     </div>
 
-                                    <button className='btn-2' type='button' onClick={() => setShowNextSection(false)}>Back</button>
+                                    <button className='btn-2' style={{marginTop:'3%'}} type='button' onClick={() => setShowNextSection(false)}>Back</button>
                                     <button className='btn-2'>Submit</button>
 
                                 </div>
