@@ -72,9 +72,9 @@
     zoom: 0.76;
   }
   .button {
-    width: 35px;
-    /* Adjusted width for smaller screens */
-    height: 30px;
+    width: 50px;
+      /* Adjusted width for medium screens */
+      height: 45px;
     /* Adjusted height for smaller screens */
     top: 15px;
     /* Adjusted top position */
