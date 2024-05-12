@@ -45,7 +45,7 @@ const AboutUsPage = ({ id, handleDrawer }) => {
 
     const onTextChange = (e) => {
         const { name, value } = e.target;
- 
+
         setformData(prevData => ({
             ...prevData,
             [name]: value
@@ -142,7 +142,7 @@ const AboutUsPage = ({ id, handleDrawer }) => {
             return;
         }
 
-        const payload = { 
+        const payload = {
             'customer_name': formData.customerName,
             'customer_email': formData.customerEmail,
             'customer_address': formData.customerAddress,
@@ -155,13 +155,13 @@ const AboutUsPage = ({ id, handleDrawer }) => {
             'size': formData.Sizes,
             'effect': formData.Effects,
             'frame': formData.Frames,
-            'duo_custom_effects': formData.Duo_Custom_Effects,  
+            'duo_custom_effects': formData.Duo_Custom_Effects,
         }
 
-        const response = await axios.post(API_URL+'/order/add',payload);
+        const response = await axios.post(API_URL + '/order/add', payload);
         console.log(response)
     }
-    
+
     return (
         <section id={id} className="aboutUs-container" >
             <div className='main-title aboutUs-title' onClick={handleDrawer}>
@@ -213,28 +213,21 @@ const AboutUsPage = ({ id, handleDrawer }) => {
 
                                 <div className='about-form'>
                                     {Object.keys(filters).map(filterType => (
-                                        <div className='form-group'>
+                                        <div className='form-group' key={filterType}>
                                             <header className='form-group-header'>
-                                                {filterType != 'Duo_Custom_Effects' ?
+                                                {filterType !== 'Duo_Custom_Effects' ?
                                                     <> {filterType.replace('_', ' ')} <span style={{ color: '#e23a2e' }}> *</span></>
                                                     : filterType.replace('_', ' ')}
                                             </header>
-                                            <RadioGroup
-                                                aria-labelledby="demo-radio-buttons-group-label"
-                                                name={filterType}
+                                            <select 
+                                                onChange={(e) => onChange(e, filterType, e.target.value)}
+                                                value={formData[filterType]} 
                                             >
-                                                <div className='form-group-items'>
-                                                    {filters[filterType].map(value => (
-                                                        <div>
-                                                            <FormControlLabel
-                                                                value={value}
-                                                                onChange={(e) => onChange(e, filterType, value)}
-                                                                control={<Radio sx={{ color: '#D2B583', '&.Mui-checked': { color: '#D2B583' } }} />}
-                                                                label={value} />
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </RadioGroup>
+                                                <option >-select-</option>
+                                                {filters[filterType].map(value => (
+                                                    <option key={value} value={value}>{value}</option>
+                                                ))}
+                                            </select>
                                         </div>
                                     ))}
 
@@ -254,30 +247,30 @@ const AboutUsPage = ({ id, handleDrawer }) => {
                                     </div>
 
                                     <div className='form-group-2'>
-                                        <header className='form-group-header-2'>Email</header>
+                                            <header className='form-group-header-2 padding-4'>Email</header>
                                         <input type="email" id="customerEmail" onChange={onTextChange} value={formData.customerEmail} name="customerEmail" placeholder="Enter your email" />
                                         <span>{errors.customerEmail ? errors.customerEmail : ''}</span>
                                     </div>
 
                                     <div className='form-group-2'>
-                                        <header className='form-group-header-2'>Phone Number</header>
+                                            <header className='form-group-header-2 padding-4' >Phone Number</header>
                                         <input type="tel" id="customerContact" onChange={onTextChange} value={formData.customerContact} name="customerContact" placeholder="Enter your phone number" />
                                         <span>{errors.customerContact ? errors.customerContact : ''}</span>
                                     </div>
 
                                     <div className='form-group-2'>
-                                        <header className='form-group-header-2'>Appointment aAddress</header>
+                                            <header className='form-group-header-2 padding-4'>Appointment aAddress</header>
                                         <textarea id="customerAddress" onChange={onTextChange} name="customerAddress" placeholder="Enter your address">{formData.customerAddress}</textarea>
                                         <span>{errors.customerAddress ? errors.customerAddress : ''}</span>
                                     </div>
 
-                                        <div className='form-group-2' style={{ marginBottom: '5%' }}>
-                                            <header className='form-group-header-2'>Town</header>
+                                    <div className='form-group-2' style={{ marginBottom: '5%' }}>
+                                            <header className='form-group-header-2 padding-4'>Town</header>
                                         <input type="text" id="customerCity" onChange={onTextChange} value={formData.customerCity} name="customerCity" placeholder="Enter your town" />
                                         <span>{errors.customerCity ? errors.customerCity : ''}</span>
                                     </div>
 
-                                    <button className='btn-2' style={{marginTop:'3%'}} type='button' onClick={() => setShowNextSection(false)}>Back</button>
+                                    <button className='btn-2' style={{ marginTop: '3%' }} type='button' onClick={() => setShowNextSection(false)}>Back</button>
                                     <button className='btn-2' onClick={submitData}>Submit</button>
 
                                 </div>

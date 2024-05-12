@@ -32,6 +32,75 @@
         /* Adjusted padding */
     }
 
+    /* Modern gloss style for select dropdowns */
+    select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-color: #f5f5f5;
+        /* Background color */
+        border: 1px solid #ccc;
+        /* Border color */
+        border-radius: 8px;
+        /* Border radius */
+        padding: 10px 15px;
+        /* Padding */
+        margin-top: 4%;
+        margin-bottom: 10%;
+        margin-left: -32px;
+        font-size: 16px;
+        /* Font size */
+        color: #333;
+        /* Text color */
+        outline: none;
+        min-width: 90vw;
+        /* Remove outline */
+        cursor: pointer;
+        /* Cursor on hover */
+        transition: border-color 0.3s, background-color 0.3s;
+        /* Smooth transition */
+    }
+
+    /* Hover style */
+    select:hover {
+        border-color: #999;
+        /* Border color on hover */
+    }
+
+    /* Focus style */
+    select:focus {
+        border-color: #D2B583;
+        /* Border color on focus */
+    }
+
+    /* Arrow icon */
+    select::after {
+        content: '\25BC';
+        /* Unicode down arrow */
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        pointer-events: none;
+        /* Prevent click events on the arrow */
+    }
+
+    /* Disabled style */
+    select:disabled {
+        opacity: 0.6;
+        /* Reduced opacity for disabled state */
+        cursor: not-allowed;
+        /* Cursor for disabled state */
+    }
+
+    /* Option style */
+    select option {
+        background-color: #f5f5f5;
+        /* Background color */
+        color: #333;
+        /* Text color */
+    }
+
     .about-right-bottom-container {
         position: absolute;
         bottom: -15px;
@@ -164,7 +233,18 @@
         margin-top: 1%;
         font-size: 18px;
         border: 1px solid #D2B583;
-        background-color: #D2D2D2;
+        background-color: #f5f5f5;
+        /* Background color */
+        border: 1px solid #ccc;
+        /* Border color */
+        border-radius: 8px;
+        /* Border radius */
+        padding: 10px 15px;
+        /* Padding */
+        margin-top: 4%;
+        font-size: 16px;
+        /* Font size */
+        color: #333;
         border-radius: 5px;
     }
 
@@ -218,7 +298,10 @@
         justify-content: flex-start;
         align-items: flex-start;
         font-weight: 600;
-        margin-top: 5%;
+    }
+
+    .padding-4 {
+        padding-top: 8%;
     }
 
     .btn {
@@ -262,6 +345,10 @@
         width: 100vw;
         min-height: 120vh;
         overflow-x: hidden;
+    }
+
+    .padding-4 {
+        padding-top: 1%;
     }
 
     .aboutUs-title {
@@ -359,6 +446,14 @@
         font-weight: 600;
     }
 
+    .form-group-header-2 {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+        font-weight: 600;
+    }
+
     .form-group-items {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -419,7 +514,11 @@
     }
 
     .form-group-2 {
-        margin-bottom: 3%;
+        margin-bottom: 1%;
+    }
+
+    .form-group-2 span {
+        margin-bottom: 1%;
     }
 
     .form-group-2 input {
@@ -473,5 +572,73 @@
         height: 10%;
         font-size: 1.5rem;
         margin-bottom: 15px;
+    }
+
+    /* Modern gloss style for select dropdowns */
+    select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-color: #f5f5f5;
+        /* Background color */
+        border: 1px solid #ccc;
+        /* Border color */
+        border-radius: 8px;
+        /* Border radius */
+        padding: 10px 15px;
+        /* Padding */
+        margin-top: 1%;
+        margin-bottom: 4%;
+        font-size: 16px;
+        /* Font size */
+        color: #333;
+        /* Text color */
+        outline: none;
+        min-width: 38vw;
+        /* Remove outline */
+        cursor: pointer;
+        /* Cursor on hover */
+        transition: border-color 0.3s, background-color 0.3s;
+        /* Smooth transition */
+    }
+
+    /* Hover style */
+    select:hover {
+        border-color: #999;
+        /* Border color on hover */
+    }
+
+    /* Focus style */
+    select:focus {
+        border-color: #D2B583;
+        /* Border color on focus */
+    }
+
+    /* Arrow icon */
+    select::after {
+        content: '\25BC';
+        /* Unicode down arrow */
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        pointer-events: none;
+        /* Prevent click events on the arrow */
+    }
+
+    /* Disabled style */
+    select:disabled {
+        opacity: 0.6;
+        /* Reduced opacity for disabled state */
+        cursor: not-allowed;
+        /* Cursor for disabled state */
+    }
+
+    /* Option style */
+    select option {
+        background-color: #f5f5f5;
+        /* Background color */
+        color: #333;
+        /* Text color */
     }
 }

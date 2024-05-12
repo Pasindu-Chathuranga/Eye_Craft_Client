@@ -126,7 +126,7 @@ const CataloguePage = ({ id, handleDrawer }) => {
                                     aria-controls="panel2-content"
                                     id="panel2-header"
                                 >
-                                    {filterType.replace('_',' ')}
+                                    {filterType.replace('_', ' ')}
                                 </AccordionSummary>
                                 <AccordionDetails>
                                     {filters[filterType].map(value => (
@@ -151,8 +151,8 @@ const CataloguePage = ({ id, handleDrawer }) => {
                 </div>
                 <div className='catalogue-body'>
 
-                    {
-                        filteredData.length > 0 ? (
+                    {filteredData.length > 0 ? (
+                        <div className='catalogue-page-main-container'>
                             <div className='catalogue-item-container'>
                                 {filteredData.map(item => (
                                     <div className='catalogue-item' key={item.id} onClick={() => openModal(item)}>
@@ -165,12 +165,14 @@ const CataloguePage = ({ id, handleDrawer }) => {
                                     </div>
                                 ))}
                             </div>
-                        ) : (
-                            <div className='catalogue-empty-container'>
-                                <div className='catalogue-empty-text-header'>No items found</div>
-                                <div className='catalogue-empty-text'>Try changing the filters</div>
-                            </div>
-                        )
+                        </div>
+
+                    ) : (
+                        <div className='catalogue-empty-container'>
+                            <div className='catalogue-empty-text-header'>No items found</div>
+                            <div className='catalogue-empty-text'>Try changing the filters</div>
+                        </div>
+                    )
                     }
                 </div>
             </div>
@@ -193,14 +195,14 @@ const CataloguePage = ({ id, handleDrawer }) => {
                                 <div className={drawerOpen ? 'drawerCloase-icon' : 'drawerCloase-icon-1'} onClick={() => setDrawerOpen(!drawerOpen)}>
                                     {!drawerOpen ? 'X' : <u>View details</u>}
                                 </div>
-                                <div className='modal-item-row'>
+                                <div className='modal-item-row' style={{ paddingTop: '50%' }}>
                                     <Icon><RemoveRedEyeIcon /></Icon>
                                     <div className='modal-item-name'>
                                         <span className='single-data-header'>Eye count</span>
                                         <span>{selectedItem.eye_count}</span>
                                     </div>
                                 </div>
-                                <div className='modal-item-row'>
+                                <div className='modal-item-row' style={{ paddingTop: '50%' }}>
                                     <Icon><StyleIcon /></Icon>
                                     <div className='modal-item-name'>
                                         <span className='single-data-header'>Print Style</span>
