@@ -1,161 +1,75 @@
-.app-container{
-  zoom:1; 
+.App {
+  text-align: center;
+
 }
-.main-title {
-  z-index: 10;
+
+#root {
+  background-color: #000;
+  overflow-x: hidden;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  font-size: 4rem;
-  font-weight: 700;
-  color: #D2B583;
-  margin-left: 15%;
-  margin-top: 5%;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.drawer-button {
-  position: absolute;
-  right: 5%;
-  top: 2%;
-  background-color: #D2B583;
-  cursor: pointer;
-  border: 0;
-  margin-bottom: 3%;
-  padding: 0;
-  color: #162F48;
-  width: 50px;
-  height: 50px;
-  transition: all ease-in-out 0.8s;
-}
-
-.drawer-button:hover {
-  background-color: #162F48;
-  width: 50px;
-  color: #fff;
-  border-radius: 15px;
-  height: 50px;
-  border: 0;
-}
-
-/* Default button styles */
-.button {
-  position: fixed;
-  top: 20px;
-  left: 0;
-  display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  width: 60px;
-  height: 50px;
-  background-color: #D2B583;
-  border: 1px solid #162F48;
-  border-radius: 0 10px 10px 0;
-  z-index: 1000;
-  transition: width 0.5s ease-in-out;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 
-/* Hover state */
-.button:hover {
-  width: 60px;
-  cursor: pointer;
+.App-link {
+  color: #61dafb;
 }
 
-@media only screen and (max-width: 767px) {
-
-}
-
-/* Media query for screens smaller than 768px */
-@media only screen and (max-width: 767px) {
-  .app-container{
-    zoom: 0.76;
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
   }
-  .button {
-    width: 50px;
-      /* Adjusted width for medium screens */
-      height: 45px;
-    /* Adjusted height for smaller screens */
-    top: 15px;
-    /* Adjusted top position */
+
+  to {
+    transform: rotate(360deg);
   }
 }
 
-/* Media query for screens between 768px and 1023px */
-@media only screen and (min-width: 768px) and (max-width: 1023px) {
-  .button {
-    width: 40px;
-    /* Adjusted width for medium screens */
-    height: 35px;
-    /* Adjusted height for medium screens */
-  }
+/* Example CSS for smooth scroll */
+[data-aos] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s, transform 1s;
 }
 
-/* Media query for screens larger than 1023px */
-@media only screen and (min-width: 1024px) {
-  .button {
-    /* No additional styling needed for larger screens */
-  }
+[data-aos].aos-animate {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.scrollbar {
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 10px;
-  background: #D2B583;
-  transform-origin: 0%;
-  border-radius: 10px;
-  z-index: 150;
-  border: #162F48 1px solid;
-}
-
-.main-subtitle {
-  z-index: 10;
-  font-weight: 700;
-  font-size: 1.6rem;
-  color: #D2D2D2;
-  margin-left: 10%;
-  margin-top: 5%;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.paragraph {
-  z-index: 10;
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: #D2D2D2;
-  margin-left: 10%;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-:root {
-  background-color: #162F48;
-  padding-right: -15px;
-}
-
-/* width */
+/* For Webkit browsers */
 ::-webkit-scrollbar {
-  width: 0px;
+  width: 12px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
-  width: 0px;
-  background-image: linear-gradient(180deg, #162F48 50%, #D2B583 40%, #162F48 100%);
+  background: #2c2c2c; /* Dark background for track */
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
-  width: 0px;
-  background: #D2B583;
-  border-radius: 50px;
+  background: #5a5a5a; /* Medium gray scrollbar */
+  border-radius: 6px;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  width: 0px;
-  background: #D2B583;
-  border-radius: 50px;
+  background: #888888; /* Light gray on hover */
 }
