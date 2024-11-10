@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { AppBar, Toolbar, Typography, Button, Container, Box, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { Menu as MenuIcon, Close as CloseIcon } from '@mui/icons-material'; // Import Menu and Close icons
-import { Link } from 'react-scroll'; // Importing Link from react-scroll
+import { AppBar, Toolbar, Typography, Button, Container, Box, IconButton, Drawer, List, ListItem, ListItemText, Slide } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import { Menu as MenuIcon, Close as CloseIcon } from '@mui/icons-material';
+import { Link } from 'react-scroll';
 import HowItWorks from './pages/HowItWorks';
 import Home from './pages/Home';
 import BookNow from './pages/BookNow';
@@ -17,10 +17,35 @@ import logo from './assets/logos/logo-white.png'
 import 'aos/dist/aos.css';
 
 function App() {
-  const [drawerOpen, setDrawerOpen] = useState(false); // State to control drawer open/close
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [showAppBar, setShowAppBar] = useState(true); // State to control AppBar visibility
+  let lastScrollY = window.scrollY;
 
   useEffect(() => {
-    Aos.init({ duration: 1000 }); // Initialize AOS with a duration for animations
+    Aos.init({ duration: 1000 });
+
+    // Function to handle scroll behavior
+    const handleScroll = () => {
+      if (window.scrollY > lastScrollY) {
+        setShowAppBar(false); // Hide AppBar when scrolling down
+      } else {
+        setShowAppBar(true); // Show AppBar when scrolling up
+      }
+      lastScrollY = window.scrollY;
+    };
+
+    const handleScrollEnd = () => {
+      setShowAppBar(true); // Show AppBar when scroll stops
+    };
+
+    // Add scroll listener and debounce on scroll end
+    window.addEventListener('scroll', handleScroll);
+    const scrollEndTimer = setTimeout(handleScrollEnd, 300);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(scrollEndTimer);
+    };
   }, []);
 
   const toggleDrawer = (open) => (event) => {
@@ -40,7 +65,7 @@ function App() {
         alignItems: 'center',
         position: 'relative',
         justifyContent: 'center',
-        bgcolor: '#000000', // Background color of the drawer
+        bgcolor: '#000000',
       }}
       role="presentation"
       onClick={toggleDrawer(false)}
@@ -49,10 +74,10 @@ function App() {
       <IconButton
         onClick={toggleDrawer(false)}
         sx={{
-          position: 'absolute', // Set position to absolute
-          top: '5px', // Offset from the top
-          left: '5px', // Offset from the left
-          color: '#e0e0e0', // Button color
+          position: 'absolute',
+          top: '5px',
+          left: '5px',
+          color: '#e0e0e0',
         }}
       >
         <CloseIcon />
@@ -62,14 +87,14 @@ function App() {
           <ListItem
             button
             key={text}
-            component={Link}
-            to={text.toLowerCase().replace(/\s+/g, '-')} // Use react-scroll Link
-            smooth={true} // Smooth scroll
-            offset={-70} // Offset for the fixed navigation bar
-            duration={500} // Scroll duration
+            onClick={() => {
+              const sectionId = text.toLowerCase().replace(/\s+/g, '-');
+              setDrawerOpen(false);
+              document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
             sx={{ justifyContent: 'center' }}
           >
-            <ListItemText primary={text} sx={{ textAlign: 'center' }} />
+            <ListItemText primary={text} sx={{ textAlign: 'center', color: '#e0e0e0' }} />
           </ListItem>
         ))}
       </List>
@@ -78,40 +103,42 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {/* Navbar */}
-      <AppBar position="sticky" sx={{ bgcolor: '#212A31' }}>
-        <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            onClick={toggleDrawer(true)}
-            sx={{ display: { xs: 'block', md: 'none' } }} // Show on small screens only
-          >
-            <MenuIcon />
-          </IconButton>
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-            <img src={logo} height='70px' style={{padding:'10px'}} alt="Logo" />
-            <Box sx={{ display: { xs: 'none', md: 'flex' }, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Link to="home" smooth={true} offset={-70} duration={500}>
-                <Button color="inherit">Home</Button>
-              </Link>
-              <Link to="how-it-works" smooth={true} offset={-70} duration={500}>
-                <Button color="inherit">How It Works</Button>
-              </Link>
-              <Link to="book-now" smooth={true} offset={-70} duration={500}>
-                <Button color="inherit">Book Now</Button>
-              </Link>
-              <Link to="gallery" smooth={true} offset={-70} duration={500}>
-                <Button color="inherit">Gallery</Button>
-              </Link>
-              <Link to="connect-with-us" smooth={true} offset={-70} duration={500}>
-                <Button color="inherit">Connect with Us</Button>
-              </Link>
-            </Box>
-          </div>
-        </Toolbar>
-      </AppBar>
+      {/* Navbar with Slide Transition for show/hide effect */}
+      <Slide direction="down" in={showAppBar} mountOnEnter unmountOnExit>
+        <AppBar position="sticky" sx={{ bgcolor: '#212A31', transition: 'all 0.3s ease' }}>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              onClick={toggleDrawer(true)}
+              sx={{ display: { xs: 'block', md: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+              <img src={logo} height='70px' style={{ padding: '10px' }} alt="Logo" />
+              <Box sx={{ display: { xs: 'none', md: 'flex' }, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Link to="home" smooth={true} offset={-70} duration={500}>
+                  <Button color="inherit">Home</Button>
+                </Link>
+                <Link to="how-it-works" smooth={true} offset={-70} duration={500}>
+                  <Button color="inherit">How It Works</Button>
+                </Link>
+                <Link to="book-now" smooth={true} offset={-70} duration={500}>
+                  <Button color="inherit">Book Now</Button>
+                </Link>
+                <Link to="gallery" smooth={true} offset={-70} duration={500}>
+                  <Button color="inherit">Gallery</Button>
+                </Link>
+                <Link to="connect-with-us" smooth={true} offset={-70} duration={500}>
+                  <Button color="inherit">Connect with Us</Button>
+                </Link>
+              </Box>
+            </div>
+          </Toolbar>
+        </AppBar>
+      </Slide>
 
       {/* Drawer for mobile navigation */}
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)} sx={{ width: '100%' }}>
@@ -123,36 +150,19 @@ function App() {
 
       {/* Sections */}
       <Container sx={{ bgcolor: '#212A31', zIndex: 99, position: 'relative' }}>
-
-        {/* Home Section */}
-        <Box id="home" py={3}  >
+        <Box id="home" py={3}>
           <Home />
         </Box>
-
-        {/* How It Works Section */}
-        <Box id="how-it-works" py={3} sx={{ marginTop: '1%' }}>
+        <Box id="how-it-works" py={3}>
           <HowItWorks />
         </Box>
-
-        {/* Book Now Section */}
-        <Box id="book-now" py={3} sx={{ marginTop: '1%' }}>
+        <Box id="book-now" py={3}>
           <BookNow />
         </Box>
-
-        {/* Gallery Section */}
-        <Box id="gallery" py={3} bgcolor="#2c2c2c" borderRadius={2} px={3} sx={{ marginTop: '1%' }}>
+        <Box id="gallery" py={3} bgcolor="#2c2c2c" borderRadius={2} px={3}>
           <Gallery />
         </Box>
-
-        {/* Connect with Us Section */}
-        <Box
-          id="connect-with-us"
-          py={3}
-          bgcolor="#ffffff"
-          borderRadius={2}
-          px={3}
-          sx={{ marginTop: '3%' }}
-        >
+        <Box id="connect-with-us" py={3} bgcolor="#ffffff" borderRadius={2} px={3} sx={{ marginTop: '3%' }}>
           <ContactUs />
         </Box>
       </Container>
