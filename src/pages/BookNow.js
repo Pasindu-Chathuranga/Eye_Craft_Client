@@ -21,12 +21,13 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useInView } from 'react-intersection-observer';
 import { useSpring, animated } from '@react-spring/web';
+import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 
 const products = Array.from({ length: 30 }, (_, index) => ({
   id: index + 1,
   name: `Product ${index + 1}`,
   price: `$${(Math.random() * 100).toFixed(2)}`,
-  image: `path_to_your_product_image_${index + 1}.jpg`, // Replace with actual product image paths
+  image: `path_to_your_product_image_${index + 1}.jpg`,
 }));
 
 const filterTypes = [
@@ -41,6 +42,8 @@ const filterTypes = [
 const BookNow = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const itemsPerPage = isMobile ? 4 : 12;
+  const maxPaginationItems = isMobile ? 3 : 10; // Dynamically set pagination items based on screen size
 
   const { ref, inView } = useInView({ threshold: 0.5 });
   const animationStyle = useSpring({
@@ -49,7 +52,6 @@ const BookNow = () => {
     config: { mass: 1, tension: 200, friction: 20 },
   });
 
-  const itemsPerPage = isMobile ? 4 : 12;
   const [currentPage, setCurrentPage] = useState(0);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -74,6 +76,10 @@ const BookNow = () => {
     if (currentPage > 0) {
       setCurrentPage((prev) => prev - 1);
     }
+  };
+
+  const handlePageClick = (page) => {
+    setCurrentPage(page);
   };
 
   const handleOpenDialog = (product) => {
@@ -102,6 +108,11 @@ const BookNow = () => {
       city: '',
     });
   };
+
+  // Get the range of page numbers to display
+  const startPage = Math.floor(currentPage / maxPaginationItems) * maxPaginationItems;
+  const endPage = Math.min(startPage + maxPaginationItems, totalPages);
+  const paginationItems = Array.from({ length: endPage - startPage }, (_, i) => startPage + i);
 
   return (
     <Box id="book-now" py={5} px={5} bgcolor="#2c2c2c">
@@ -159,12 +170,34 @@ const BookNow = () => {
             ))}
           </Grid>
 
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-            <Button variant="contained" onClick={handlePrevPage} disabled={currentPage === 0}>
-              Previous
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 2 }}>
+            <Button
+              variant="contained"
+              onClick={handlePrevPage}
+              sx={{ marginRight: '10px' }}
+              disabled={currentPage === 0}
+            >
+              <ArrowBackIos />
             </Button>
-            <Button variant="contained" onClick={handleNextPage} disabled={currentPage >= totalPages - 1}>
-              Next
+
+            {paginationItems.map((page) => (
+              <Button
+                key={page}
+                sx={{ width: '40px' }}
+                variant={page === currentPage ? 'contained' : 'text'}
+                onClick={() => handlePageClick(page)}
+              >
+                {page + 1}
+              </Button>
+            ))}
+
+            <Button
+              variant="contained"
+              onClick={handleNextPage}
+              sx={{ marginLeft: '10px' }}
+              disabled={currentPage >= totalPages - 1}
+            >
+              <ArrowForwardIos />
             </Button>
           </Box>
         </Grid>
@@ -199,27 +232,27 @@ const BookNow = () => {
                   sx={{
                     color: '#1c1c1c',
                     '& .MuiInputBase-input': {
-                      color: '#333', // Darker text for input
+                      color: '#333',
                     },
                     '& .MuiInputLabel-root': {
-                      color: '#333', // Darker label color
+                      color: '#333',
                     },
                     '& .MuiOutlinedInput-root': {
                       '&:hover fieldset': {
-                        borderColor: '#333', // Darker underline color on hover
+                        borderColor: '#333',
                       },
                       '&.Mui-focused fieldset': {
-                        borderColor: '#333', // Darker underline color when focused
+                        borderColor: '#333',
                       },
                       '& fieldset': {
-                        borderColor: '#666', // Default darker underline color
+                        borderColor: '#666',
                       },
                     },
                   }}
                   label={field.charAt(0).toUpperCase() + field.slice(1)}
-                  name={field}
                   fullWidth
-                  variant="outlined" // Use outlined variant for the underline effect
+                  name={field}
+                  value={customerDetails[field]}
                   onChange={handleChange}
                 />
               ))}
@@ -227,8 +260,8 @@ const BookNow = () => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog} color="primary">Cancel</Button>
-          <Button onClick={handleSubmit} color="primary">Book Now</Button>
+          <Button onClick={handleCloseDialog} color="error">Cancel</Button>
+          <Button onClick={handleSubmit} color="primary">Book</Button>
         </DialogActions>
       </Dialog>
     </Box>
