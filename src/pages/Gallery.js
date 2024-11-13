@@ -18,9 +18,9 @@ const Gallery = () => {
     { id: 1, src: image1, alt: 'Image 1' },
     { id: 2, src: image2, alt: 'Image 2' },
     { id: 3, src: image3, alt: 'Image 3' },
-    { id: 4, src: image4, alt: 'Image 4' },
-    { id: 5, src: image5, alt: 'Image 5' },
-    { id: 6, src: image6, alt: 'Image 6' },
+    // { id: 4, src: image4, alt: 'Image 4' },
+    // { id: 5, src: image5, alt: 'Image 5' },
+    // { id: 6, src: image6, alt: 'Image 6' },
   ];
 
   const theme = useTheme();
@@ -129,8 +129,7 @@ const Gallery = () => {
                         src={image.src}
                         alt={image.alt}
                         style={{
-                          width: '100%',
-                          height: '200px',
+                          width: '100%', 
                           objectFit: 'cover',
                           borderRadius: '8px',
                           transition: 'transform 0.3s ease-in-out',
