@@ -19,34 +19,7 @@ import 'aos/dist/aos.css';
 function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [showAppBar, setShowAppBar] = useState(true); // State to control AppBar visibility
-  let lastScrollY = window.scrollY;
-
-  useEffect(() => {
-    Aos.init({ duration: 1000 });
-
-    // Function to handle scroll behavior
-    const handleScroll = () => {
-      if (window.scrollY > lastScrollY) {
-        setShowAppBar(false); // Hide AppBar when scrolling down
-      } else {
-        setShowAppBar(true); // Show AppBar when scrolling up
-      }
-      lastScrollY = window.scrollY;
-    };
-
-    const handleScrollEnd = () => {
-      setShowAppBar(true); // Show AppBar when scroll stops
-    };
-
-    // Add scroll listener and debounce on scroll end
-    window.addEventListener('scroll', handleScroll);
-    const scrollEndTimer = setTimeout(handleScrollEnd, 300);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      clearTimeout(scrollEndTimer);
-    };
-  }, []);
+  let lastScrollY = window.scrollY; 
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
