@@ -15,9 +15,21 @@ function Home() {
     <Box id="home" py={5} ref={ref}>
       <Fade in={inView} timeout={1000}>
         <Grid container spacing={2} alignItems="center">
-          {/* Left Column */}
+          {/* Left Column */} 
           <Grid item xs={12} md={6}>
             <Slide direction="left" in={inView} timeout={800}>
+              <Box
+                component="img"
+                src={homeBG}
+                alt="Art in every blink"
+                sx={{ width: '100%', borderRadius: 2 }}
+              />
+            </Slide>
+          </Grid>
+
+          {/* Right Column */}
+          <Grid item xs={12} md={6}>
+            <Slide direction="right" in={inView} timeout={1000}>
               <Box>
                 <img src={logo} width="95%" alt="Logo" />
                 <Typography variant="h2" gutterBottom sx={{ color: '#D3D4D9', marginLeft: '15px' }}>
@@ -48,18 +60,7 @@ function Home() {
               </Box>
             </Slide>
           </Grid>
-
-          {/* Right Column */}
-          <Grid item xs={12} md={6}>
-            <Slide direction="right" in={inView} timeout={1000}>
-              <Box
-                component="img"
-                src={homeBG}
-                alt="Art in every blink"
-                sx={{ width: '100%', borderRadius: 2 }}
-              />
-            </Slide>
-          </Grid>
+          
         </Grid>
       </Fade>
     </Box>
