@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -22,13 +22,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useInView } from 'react-intersection-observer';
 import { useSpring, animated } from '@react-spring/web';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
-
-const products = Array.from({ length: 30 }, (_, index) => ({
-  id: index + 1,
-  name: `Product ${index + 1}`,
-  price: `$${(Math.random() * 100).toFixed(2)}`,
-  image: `path_to_your_product_image_${index + 1}.jpg`,
-}));
+import axios from "axios";
+import { API_URL } from "../const/api_url";
 
 const filterTypes = [
   { title: 'Eye Count', options: ['Option 1', 'Option 2', 'Option 3'] },
@@ -55,6 +50,7 @@ const BookNow = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [products, setProducts] = useState([]);
   const [customerDetails, setCustomerDetails] = useState({
     name: '',
     email: '',
@@ -63,8 +59,21 @@ const BookNow = () => {
     city: '',
   });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get(`${API_URL}/image/get`);
+        setProducts(data);
+      } catch (error) {
+
+      }
+    };
+    fetchData();
+  }, []);
+
   const currentItems = products.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
   const totalPages = Math.ceil(products.length / itemsPerPage);
+
 
   const handleNextPage = () => {
     if (currentPage < totalPages - 1) {
@@ -156,14 +165,19 @@ const BookNow = () => {
               <Grid item xs={12} sm={6} md={4} key={item.id}>
                 <Paper elevation={2} sx={{ padding: 2, textAlign: 'center' }}>
                   <img
-                    src={item.image}
+                    src={item.image_url}
                     alt={item.name}
-                    style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+                    style={{
+                      width: '100%',
+                      height: '200px', // Fixed height for uniformity
+                      objectFit: 'cover', // Center and crop to fit
+                      borderRadius: '8px'
+                    }}
                   />
                   <Typography variant="h6" sx={{ mt: 1 }}>
                     {item.name}
                   </Typography>
-                  <Typography variant="body2">{item.price}</Typography>
+                  <Typography variant="body2">Rs.{item.price}.00</Typography>
                   <Button variant="text" onClick={() => handleOpenDialog(item)}>Book Now</Button>
                 </Paper>
               </Grid>
@@ -213,7 +227,7 @@ const BookNow = () => {
                   <Typography variant="h6">{selectedProduct.name}</Typography>
                   <Typography variant="body1">{selectedProduct.price}</Typography>
                   <img
-                    src={selectedProduct.image}
+                    src={selectedProduct.image_url}
                     alt={selectedProduct.name}
                     style={{ width: '100%', height: 'auto', borderRadius: '8px', marginTop: '10px' }}
                   />
@@ -264,7 +278,7 @@ const BookNow = () => {
           <Button onClick={handleSubmit} color="primary">Book</Button>
         </DialogActions>
       </Dialog>
-    </Box>
+    </Box >
   );
 };
 
