@@ -18,8 +18,7 @@ import 'aos/dist/aos.css';
 
 function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [showAppBar, setShowAppBar] = useState(true); // State to control AppBar visibility
-  let lastScrollY = window.scrollY; 
+  const [showAppBar, setShowAppBar] = useState(true); 
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -90,7 +89,7 @@ function App() {
               <MenuIcon />
             </IconButton>
             <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-              <img src={logo} height='70px' style={{ padding: '10px' }} alt="Logo" />
+              <img src={logo} height='50px' style={{ padding: '10px' }} alt="Logo" />
               <Box sx={{ display: { xs: 'none', md: 'flex' }, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Link to="home" smooth={true} offset={-70} duration={500}>
                   <Button color="inherit">Home</Button>

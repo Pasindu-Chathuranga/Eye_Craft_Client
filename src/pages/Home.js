@@ -12,7 +12,7 @@ function Home() {
   });
 
   return (
-    <Box id="home" py={5} ref={ref}>
+    <Box id="home" pt={1} pb={5} ref={ref}>
       <Fade in={inView} timeout={1000}>
         <Grid container spacing={2} alignItems="center">
           {/* Left Column */} 
@@ -22,7 +22,7 @@ function Home() {
                 component="img"
                 src={homeBG}
                 alt="Art in every blink"
-                sx={{ width: '100%', borderRadius: 2 }}
+                sx={{ width: '100%',height:'95%', borderRadius: 2 }}
               />
             </Slide>
           </Grid>
@@ -30,8 +30,7 @@ function Home() {
           {/* Right Column */}
           <Grid item xs={12} md={6}>
             <Slide direction="right" in={inView} timeout={1000}>
-              <Box>
-                <img src={logo} width="95%" alt="Logo" />
+              <Box> 
                 <Typography variant="h2" gutterBottom sx={{ color: '#D3D4D9', marginLeft: '15px' }}>
                   Art in Every Blink
                 </Typography>

@@ -36,7 +36,7 @@ const Step = ({ icon, title, content, image, index }) => {
                   {title}
                 </Typography>
               </Box>
-              <Typography variant="body2" color="textSecondary" sx={{ height: '100px' }}>
+              <Typography variant="body2" color="textSecondary" sx={{ height: '100px', marginBottom: '10px' }} pb={2}>
                 {content}
               </Typography>
               <Box
@@ -52,6 +52,7 @@ const Step = ({ icon, title, content, image, index }) => {
                   display: 'block',
                   marginLeft: 'auto',
                   marginRight: 'auto',
+                  marginTop:'20px'
                 }}
               />
             </CardContent>
