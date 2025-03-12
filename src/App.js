@@ -18,7 +18,7 @@ import 'aos/dist/aos.css';
 
 function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [showAppBar, setShowAppBar] = useState(true); 
+  const [showAppBar, setShowAppBar] = useState(true);
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -77,7 +77,7 @@ function App() {
     <ThemeProvider theme={theme}>
       {/* Navbar with Slide Transition for show/hide effect */}
       <Slide direction="down" in={showAppBar} mountOnEnter unmountOnExit>
-        <AppBar position="sticky" sx={{ bgcolor: '#212A31', transition: 'all 0.3s ease' }}>
+        <AppBar position="sticky" sx={{ bgcolor: '#0D0D0D', transition: 'all 0.3s ease' }}>
           <Toolbar>
             <IconButton
               edge="start"
@@ -121,7 +121,7 @@ function App() {
       <StartBackground />
 
       {/* Sections */}
-      <Container sx={{ bgcolor: '#212A31', zIndex: 99, position: 'relative' }}>
+      <Container sx={{ bgcolor: '#0D0D0D', zIndex: 99, position: 'relative' }}>
         <Box id="home" py={3}>
           <Home />
         </Box>
@@ -131,7 +131,7 @@ function App() {
         <Box id="book-now" py={3}>
           <BookNow />
         </Box>
-        <Box id="gallery" py={3} bgcolor="#2c2c2c" borderRadius={2} px={3}>
+        <Box id="gallery" py={3} bgcolor="#0c0e0d" borderRadius={2} px={3}>
           <Gallery />
         </Box>
         <Box id="connect-with-us" py={3} bgcolor="#ffffff" borderRadius={2} px={3} sx={{ marginTop: '3%' }}>

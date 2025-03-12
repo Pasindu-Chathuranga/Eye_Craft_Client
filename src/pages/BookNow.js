@@ -1,285 +1,233 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Typography,
   Button,
-  Grid,
-  Paper,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Checkbox,
-  FormControlLabel,
   Dialog,
-  DialogActions,
-  DialogContent,
   DialogTitle,
+  DialogContent,
   TextField,
-  useTheme,
-  useMediaQuery,
+  DialogActions,
+  Grid,
+  Autocomplete,
+  Card,
+  CardContent,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useInView } from 'react-intersection-observer';
-import { useSpring, animated } from '@react-spring/web';
-import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
-import axios from "axios";
-import { API_URL } from "../const/api_url";
+import { useTheme } from '@mui/material/styles';
+import { motion } from 'framer-motion';
+import { CheckCircle, Palette, FormatSize, FilterFrames, BlurOn } from '@mui/icons-material';
+import CustomImage from '../components/CustomeImage';
 
-const filterTypes = [
-  { title: 'Eye Count', options: ['Option 1', 'Option 2', 'Option 3'] },
-  { title: 'Print Styles', options: ['Option 1', 'Option 2', 'Option 3'] },
-  { title: 'Sizes', options: ['Option 1', 'Option 2', 'Option 3'] },
-  { title: 'Frames', options: ['Option 1', 'Option 2', 'Option 3'] },
-  { title: 'Effects', options: ['Option 1', 'Option 2', 'Option 3'] },
-  { title: 'Duo Custom Effects', options: ['Option 1', 'Option 2', 'Option 3'] },
-];
+const icons = {
+  Eye_Count: <CheckCircle sx={{ color: '#6a1b9a' }} />,
+  Print_Style: <Palette sx={{ color: '#6a1b9a' }} />,
+  Sizes: <FormatSize sx={{ color: '#6a1b9a' }} />,
+  Frames: <FilterFrames sx={{ color: '#6a1b9a' }} />,
+  Effects: <BlurOn sx={{ color: '#6a1b9a' }} />,
+  Duo_Irish_effect: <BlurOn sx={{ color: '#6a1b9a' }} />
+};
 
-const BookNow = () => {
+const AddOrderPage = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const itemsPerPage = isMobile ? 4 : 12;
-  const maxPaginationItems = isMobile ? 3 : 10; // Dynamically set pagination items based on screen size
-
-  const { ref, inView } = useInView({ threshold: 0.5 });
-  const animationStyle = useSpring({
-    opacity: inView ? 1 : 0,
-    transform: inView ? 'translateY(0)' : 'translateY(20px)',
-    config: { mass: 1, tension: 200, friction: 20 },
-  });
-
-  const [currentPage, setCurrentPage] = useState(0);
+  const [orderData, setOrderData] = useState({ Eye_Count: 'Single iris', Print_Style: 'Paper-based print', Sizes: '20cmx20cm', Effects: 'Pure effect image', Frames: 'Standard frame picture', Duo_Irish_effect: '' });
   const [openDialog, setOpenDialog] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [products, setProducts] = useState([]);
-  const [customerDetails, setCustomerDetails] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
+  const [customerData, setCustomerData] = useState({ name: '', address: '', contact: '', email: '' });
+  const [errors, setErrors] = useState({});
+  const [filters, setFilters] = useState({
+    Eye_Count: ['Single iris', 'Duo iris', 'Trio iris', 'Quadruple iris'],
+    Print_Style: ['Paper-based print', 'Acrylic Artwork'],
+    Sizes: ['20cmx20cm', '30cmx30cm', '40cmx40cm', '50cmx50cm'],
+    Effects: ['Pure effect image', 'Explosion effect image', 'Halo effect image', 'Dust effect image'],
+    Frames: ['Professional frame picture', 'Standard frame picture']
   });
+  const [recentlyChanged, setRecentlyChanged] = useState({});
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get(`${API_URL}/image/get`);
-        setProducts(data);
-      } catch (error) {
-
+    if (orderData.Frames === '20cmx20cm') {
+      setOrderData((prev) => ({ ...prev, Frames: 'Standard frame picture' })); // Auto-set frame
+      setFilters((prev) => ({ ...prev, Frames: ['Standard frame picture'] }));
+      setFilters((prev) => ({ ...prev, Frames: ['Standard frame picture'] }));
+    } else if (orderData.Frames === '50cmx50cm') {
+      setOrderData((prev) => ({ ...prev, Frames: 'Professional frame picture' })); // Auto-set frame
+      setFilters((prev) => ({ ...prev, Frames: ['Professional frame picture'] }));
+    } else {
+      setFilters((prev) => ({ ...prev, Frames: ['Professional frame picture', 'Standard frame picture'] }));
+    }
+  }, [orderData.Frames])
+  const handleSelectChange = (name, value) => {
+    setOrderData((prev) => ({ ...prev, [name]: value }));
+    setRecentlyChanged((prev) => ({ ...prev, [name]: true }));
+    setTimeout(() => {
+      setRecentlyChanged((prev) => ({ ...prev, [name]: false }));
+    }, 1000);
+    // Adjust frame options based on the selected size
+    if (name === 'Sizes') {
+      if (value === '20cmx20cm') {
+        setOrderData((prev) => ({ ...prev, Frames: 'Standard frame picture' })); // Auto-set frame
+        setFilters((prev) => ({ ...prev, Frames: ['Standard frame picture'] }));
+        setFilters((prev) => ({ ...prev, Frames: ['Standard frame picture'] }));
+      } else if (value === '50cmx50cm') {
+        setOrderData((prev) => ({ ...prev, Frames: 'Professional frame picture' })); // Auto-set frame
+        setFilters((prev) => ({ ...prev, Frames: ['Professional frame picture'] }));
+      } else {
+        setFilters((prev) => ({ ...prev, Frames: ['Professional frame picture', 'Standard frame picture'] }));
       }
-    };
-    fetchData();
-  }, []);
-
-  const currentItems = products.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
-  const totalPages = Math.ceil(products.length / itemsPerPage);
-
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages - 1) {
-      setCurrentPage((prev) => prev + 1);
     }
   };
 
-  const handlePrevPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage((prev) => prev - 1);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Define required fields excluding "Duo Iris Effect"
+    const requiredFields = Object.keys(orderData).filter(key => key !== 'Duo_Irish_effect');
+
+    // Check if any required field is empty
+    const hasEmptyFields = requiredFields.some((key) => !orderData[key]);
+
+    if (hasEmptyFields) {
+      setErrors({ message: 'Please fill out all required fields' });
+    } else {
+      setOpenDialog(true);
     }
   };
-
-  const handlePageClick = (page) => {
-    setCurrentPage(page);
-  };
-
-  const handleOpenDialog = (product) => {
-    setSelectedProduct(product);
-    setOpenDialog(true);
-  };
-
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-    setSelectedProduct(null);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCustomerDetails({ ...customerDetails, [name]: value });
-  };
-
-  const handleSubmit = () => {
-    console.log(customerDetails);
-    handleCloseDialog();
-    setCustomerDetails({
-      name: '',
-      email: '',
-      phone: '',
-      address: '',
-      city: '',
-    });
-  };
-
-  // Get the range of page numbers to display
-  const startPage = Math.floor(currentPage / maxPaginationItems) * maxPaginationItems;
-  const endPage = Math.min(startPage + maxPaginationItems, totalPages);
-  const paginationItems = Array.from({ length: endPage - startPage }, (_, i) => startPage + i);
 
   return (
-    <Box id="book-now" py={5} px={5} bgcolor="#2c2c2c">
-      <animated.div style={animationStyle} ref={ref}>
-        <Typography variant="h4" gutterBottom>
-          Product Catalog
-        </Typography>
-        <Typography variant="body1">
-          Ready to get started? Book an appointment with us today!
-        </Typography>
-      </animated.div>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', p: 2 }}>
+      <Typography variant="h4" gutterBottom>
+        Customize Your Order
+      </Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6}>
+          <Card
+            sx={{
+              bgcolor: '#E0E0E0',
+              p: { xs: '0 16px 16px 16px', sm: 0 }, // Removes top padding on mobile
+            }}
+          >
+            <CardContent sx={{ p: { xs: '0 16px 16px 16px', sm: 0 }, }}>
+              <CustomImage
+                eyeCount={orderData.Eye_Count}
+                frame={orderData.Frames}
+                size={orderData.Sizes}
+                effect={orderData.Effects}
+                duoEffect={orderData.Duo_Irish_effect}
+              />
+              <List>
+                <Grid container spacing={2}>
+                  {Object.entries(orderData)
+                    .filter(([key]) => key !== 'Duo_Iris_Effect' || orderData.Eye_Count === 'Duo Irish')
+                    .map(([key, value]) => (
+                      <Grid item xs={12} sm={6} key={key}>
+                        <ListItem
+                          sx={{
+                            color: '#393228',
+                            py: 0,
+                            transition: '0.3s',
+                            position: 'relative',
+                            overflow: 'hidden',
+                            '&::before': {
+                              content: '""',
+                              position: 'absolute',
+                              top: 0,
+                              left: 0,
+                              width: '100%',
+                              height: '100%',
+                              background: 'rgba(255, 215, 0, 0.5)',
+                              transform: recentlyChanged[key] ? 'scaleY(1)' : 'scaleY(0)',
+                              transformOrigin: 'center',
+                              transition: 'transform 0.5s ease-in-out',
+                            },
+                          }}
+                        >
+                          <ListItemIcon sx={{ color: '#393228' }}>
+                            {React.cloneElement(icons[key], { sx: { color: '#393228' } })}
+                          </ListItemIcon>
+                          <ListItemText
+                            primary={`${key.replace(/_/g, ' ')}`}
+                            secondary={value || 'Not selected'}
+                            sx={{ color: '#393228' }}
+                            primaryTypographyProps={{ color: '#326a80' }}
+                          />
+                        </ListItem>
+                      </Grid>
+                    ))}
+                </Grid>
+              </List>
 
-      <Grid container spacing={3} sx={{ mt: 4 }}>
-        <Grid item xs={12} sm={4}>
-          <Paper elevation={2} sx={{ padding: 2 }}>
-            <Typography variant="h6" gutterBottom>
-              Filters
-            </Typography>
-            {filterTypes.map((filter, index) => (
-              <Accordion key={index}>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography>{filter.title}</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  {filter.options.map((option, i) => (
-                    <FormControlLabel
-                      key={i}
-                      control={<Checkbox />}
-                      label={option}
-                    />
-                  ))}
-                </AccordionDetails>
-              </Accordion>
-            ))}
-          </Paper>
+
+            </CardContent>
+          </Card>
         </Grid>
-
-        <Grid item xs={12} sm={8}>
-          <Grid container spacing={2}>
-            {currentItems.map((item) => (
-              <Grid item xs={12} sm={6} md={4} key={item.id}>
-                <Paper elevation={2} sx={{ padding: 2, textAlign: 'center' }}>
-                  <img
-                    src={item.image_url}
-                    alt={item.name}
-                    style={{
-                      width: '100%',
-                      height: '200px', // Fixed height for uniformity
-                      objectFit: 'cover', // Center and crop to fit
-                      borderRadius: '8px'
-                    }}
-                  />
-                  <Typography variant="h6" sx={{ mt: 1 }}>
-                    {item.name}
-                  </Typography>
-                  <Typography variant="body2">Rs.{item.price}.00</Typography>
-                  <Button variant="text" onClick={() => handleOpenDialog(item)}>Book Now</Button>
-                </Paper>
-              </Grid>
-            ))}
-          </Grid>
-
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 2 }}>
-            <Button
-              variant="contained"
-              onClick={handlePrevPage}
-              sx={{ marginRight: '10px' }}
-              disabled={currentPage === 0}
-            >
-              <ArrowBackIos />
-            </Button>
-
-            {paginationItems.map((page) => (
-              <Button
-                key={page}
-                sx={{ width: '40px' }}
-                variant={page === currentPage ? 'contained' : 'text'}
-                onClick={() => handlePageClick(page)}
-              >
-                {page + 1}
+        <Grid item xs={12} md={6}>
+          <Typography variant="h6" gutterBottom sx={{ mb: 4, color: '#fff' }}>
+            Select Customizations
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            {Object.keys(filters).map((key) => {
+              const options = filters[key];
+              return (
+                <Autocomplete
+                  key={key}
+                  options={options}
+                  onChange={(_, value) => handleSelectChange(key, value)}
+                  value={orderData[key]}
+                  renderInput={(params) => (
+                    <TextField {...params} label={key.replace(/_/g, ' ')} fullWidth sx={{ mb: 2 }} />
+                  )}
+                />
+              );
+            })}
+            {orderData.Eye_Count == 'Duo iris' && (
+              <Autocomplete
+                options={['Yin Yang', 'Infinity', 'Fusion']}
+                onChange={(_, value) => handleSelectChange('Duo_Irish_effect', value)}
+                value={orderData['Duo_Irish_effect']}
+                renderInput={(params) => (
+                  <TextField {...params} label='Duo Irish effect' fullWidth sx={{ mb: 2 }} />
+                )}
+              />)}
+            <motion.div whileHover={{ scale: 1.05 }}>
+              <Button type="submit" variant="contained" fullWidth>
+                Proceed
               </Button>
-            ))}
-
-            <Button
-              variant="contained"
-              onClick={handleNextPage}
-              sx={{ marginLeft: '10px' }}
-              disabled={currentPage >= totalPages - 1}
-            >
-              <ArrowForwardIos />
-            </Button>
-          </Box>
+            </motion.div>
+          </form>
         </Grid>
       </Grid>
 
-      <Dialog open={openDialog} onClose={handleCloseDialog} fullWidth maxWidth="md">
-        <DialogTitle>Book Now</DialogTitle>
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)} fullWidth maxWidth="sm">
+        <DialogTitle sx={{ textAlign: 'center' }}>Enter Contact Details</DialogTitle>
         <DialogContent>
-          <Box display="flex" flexDirection={{ xs: 'column', sm: 'row' }} justifyContent="space-between" sx={{ width: '100%' }}>
-            <Box sx={{ flex: 1, bgcolor: '#424242', color: '#fff', p: 2, borderRadius: 1, mb: { xs: 2, sm: 0 } }}>
-              {selectedProduct && (
-                <>
-                  <Typography variant="h6">{selectedProduct.name}</Typography>
-                  <Typography variant="body1">{selectedProduct.price}</Typography>
-                  <img
-                    src={selectedProduct.image_url}
-                    alt={selectedProduct.name}
-                    style={{ width: '100%', height: 'auto', borderRadius: '8px', marginTop: '10px' }}
-                  />
-                </>
-              )}
-            </Box>
-
-            <Box sx={{ flex: 1, bgcolor: '#f5f5f5', color: '#1c1c1c', p: 2, borderRadius: 1 }}>
-              <Typography variant="h6" gutterBottom>
-                Enter Your Details
-              </Typography>
-              {['name', 'email', 'phone', 'address', 'city'].map((field) => (
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              {['name', 'address', 'contact', 'email'].map((field) => (
                 <TextField
                   key={field}
-                  margin="dense"
-                  sx={{
-                    color: '#1c1c1c',
-                    '& .MuiInputBase-input': {
-                      color: '#333',
-                    },
-                    '& .MuiInputLabel-root': {
-                      color: '#333',
-                    },
-                    '& .MuiOutlinedInput-root': {
-                      '&:hover fieldset': {
-                        borderColor: '#333',
-                      },
-                      '&.Mui-focused fieldset': {
-                        borderColor: '#333',
-                      },
-                      '& fieldset': {
-                        borderColor: '#666',
-                      },
-                    },
-                  }}
-                  label={field.charAt(0).toUpperCase() + field.slice(1)}
                   fullWidth
+                  label={field == 'contact' ? 'Contact Number': field.charAt(0).toUpperCase() + field.slice(1)}
                   name={field}
-                  value={customerDetails[field]}
-                  onChange={handleChange}
+                  onChange={(e) => setCustomerData({ ...customerData, [e.target.name]: e.target.value })}
+                  sx={{ mb: 2 }}
+                  error={!!errors[field]}
+                  helperText={errors[field]}
                 />
               ))}
-            </Box>
-          </Box>
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog} color="error">Cancel</Button>
-          <Button onClick={handleSubmit} color="primary">Book</Button>
+          <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
+          <Button onClick={() => console.log('Order Submitted:', { orderData, customerData })} variant="contained">
+            Submit Order
+          </Button>
         </DialogActions>
       </Dialog>
-    </Box >
+    </Box>
   );
 };
 
-export default BookNow;
+export default AddOrderPage;

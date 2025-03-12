@@ -4,9 +4,9 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     mode: 'dark',
-    primary: { main: '#90caf9' },
+    primary: { main: '#0D0D0D' },
     secondary: { main: '#f48fb1' },
-    background: { default: '#121212', paper: '#1e1e1e' },
+    background: { default: '#0D0D0D', paper: '#0D0D0D' },
     text: { primary: '#D3D4D9', secondary: '#748D92' },
   },
   typography: {
@@ -52,7 +52,7 @@ const theme = createTheme({
           },
         },
         textSecondary: {
-          color: '#f48fb1',
+          color: '#333533',
           '&:hover': {
             backgroundColor: 'rgba(244, 143, 177, 0.08)',
           },

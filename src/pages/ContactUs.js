@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Typography, Grid, Fade, Slide } from '@mui/material';
 import { Email, Phone, Instagram, Facebook } from '@mui/icons-material';
 import Logo from '../assets/logos/logo.png';
+import EyeCraft from '../assets/logos/eyecraft.PNG';
 import { useInView } from 'react-intersection-observer';
 
 const ContactUs = () => {
@@ -15,16 +16,11 @@ const ContactUs = () => {
         <Grid container spacing={2} alignItems="center">
           {/* Left side: Logo, Title, and Slogan */}
           <Grid item xs={12} md={6} sx={{ display: 'flex', alignItems: 'center' }}>
-            <img src={Logo} alt="Logo" style={{ width: 100, marginRight: 16 }} />
+            <img src={Logo} alt="Logo" style={{ width: 100, marginRight: 10 }} />
             <Box>
-              <Typography variant="h4" sx={{ color: '#333333' }}>
-                Eye Craft
-              </Typography>
-              <Typography variant="h5" sx={{ color: '#333333' }}>
+              <img src={EyeCraft} alt="Logo" style={{ width: 150, marginRight: 16 }} />
+              <Typography variant="h6" sx={{ color: '#555555', marginLeft: '8px' }}>
                 Art in Every Blink
-              </Typography>
-              <Typography variant="body1" sx={{ color: '#555555' }}>
-                Your one-stop destination for exquisite art pieces.
               </Typography>
             </Box>
           </Grid>

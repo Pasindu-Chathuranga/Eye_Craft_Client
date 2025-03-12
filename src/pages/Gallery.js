@@ -91,13 +91,14 @@ const Gallery = () => {
                   position: 'absolute',
                   top: '50%',
                   left: '10px',
+                  marginRight:'10px',
                   zIndex: 1,
                   color: currentPage === 0 ? '#aaa' : '#000',
                   transform: 'translateY(-50%)',
                   '&:hover': { backgroundColor: 'transparent' },
                 }}
               >
-                <ArrowBackIosIcon />
+                <ArrowBackIosIcon sx={{ color: '#fff', mr: 4 }} />
               </IconButton>
             </Slide>
           </div>
@@ -129,7 +130,7 @@ const Gallery = () => {
                         src={image.src}
                         alt={image.alt}
                         style={{
-                          width: '100%', 
+                          width: '100%',
                           objectFit: 'cover',
                           borderRadius: '8px',
                           transition: 'transform 0.3s ease-in-out',
@@ -152,12 +153,13 @@ const Gallery = () => {
                   top: '50%',
                   right: 0,
                   zIndex: 1,
+                  marginLeft: '10px',
                   color: (currentPage + 1) * ITEMS_PER_PAGE >= images.length ? '#aaa' : '#000',
                   transform: 'translateY(-50%)',
                   '&:hover': { backgroundColor: 'transparent' },
                 }}
               >
-                <ArrowForwardIosIcon />
+                <ArrowForwardIosIcon sx={{ color: '#fff', ml: 4 }} />
               </IconButton>
             </Slide>
           </div>
