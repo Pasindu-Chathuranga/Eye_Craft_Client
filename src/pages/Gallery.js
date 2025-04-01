@@ -1,43 +1,52 @@
-import React, { useState } from 'react';
-import { Box, Typography, Grid, Paper, IconButton, Dialog, useMediaQuery, useTheme, Fade, Slide } from '@mui/material';
-import { ArrowBackIos as ArrowBackIosIcon, ArrowForwardIos as ArrowForwardIosIcon, Close as CloseIcon } from '@mui/icons-material';
-import { useInView } from 'react-intersection-observer';
-import image1 from '../assets/gallary/1.JPG';
-import image2 from '../assets/gallary/2.JPG';
-import image3 from '../assets/gallary/3.JPG';
-import image4 from '../assets/gallary/4.JPG';
-import image5 from '../assets/gallary/5.JPG';
-import image6 from '../assets/gallary/6.JPG';
+import React, { useState } from "react";
+import {
+  Box,
+  Typography,
+  Grid,
+  Paper,
+  Dialog,
+  IconButton,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { Close as CloseIcon, ArrowBack, ArrowForward } from "@mui/icons-material";
+import image1 from "../assets/gallary/1.JPG";
+import image2 from "../assets/gallary/2.JPG";
+import image3 from "../assets/gallary/3.JPG";
+import image4 from "../assets/gallary/4.JPG";
+import image5 from "../assets/gallary/5.JPG";
+import image6 from "../assets/gallary/6.JPG";
+import image7 from "../assets/gallary/7.jpg";
+import image8 from "../assets/gallary/8.jpg";
+import image9 from "../assets/gallary/9.jpg";
+import image10 from "../assets/gallary/10.jpg";
+import image11 from "../assets/gallary/11.jpg";
+import image12 from "../assets/gallary/12.png";
+import image13 from "../assets/gallary/13.jpg";
+
+const images = [
+  { id: 1, src: image1, alt: "Image 1" },
+  { id: 2, src: image2, alt: "Image 2" },
+  { id: 3, src: image3, alt: "Image 3" },
+  { id: 4, src: image4, alt: "Image 4" },
+  { id: 5, src: image5, alt: "Image 5" },
+  { id: 6, src: image6, alt: "Image 6" },
+  { id: 7, src: image7, alt: "Image 7" },
+  { id: 8, src: image8, alt: "Image 8" },
+  { id: 9, src: image9, alt: "Image 9" },
+  { id: 10, src: image10, alt: "Image 10" },
+  { id: 11, src: image11, alt: "Image 11" },
+  { id: 12, src: image12, alt: "Image 12" },
+  { id: 13, src: image13, alt: "Image 13" },
+];
 
 const Gallery = () => {
-  const [currentPage, setCurrentPage] = useState(0);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-
-  const images = [
-    { id: 1, src: image1, alt: 'Image 1' },
-    { id: 2, src: image2, alt: 'Image 2' },
-    { id: 3, src: image3, alt: 'Image 3' },
-    // { id: 4, src: image4, alt: 'Image 4' },
-    // { id: 5, src: image5, alt: 'Image 5' },
-    // { id: 6, src: image6, alt: 'Image 6' },
-  ];
-
+  const [page, setPage] = useState(0);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Check if the screen is small (mobile view)
-  const ITEMS_PER_PAGE = isMobile ? 1 : 4; // Display 1 item per page on mobile, 4 items on larger screens
-
-  const handleNextPage = () => {
-    if ((currentPage + 1) * ITEMS_PER_PAGE < images.length) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const imagesPerPage = isMobile ? 6 : images.length;
 
   const handleImageClick = (image) => {
     setSelectedImage(image);
@@ -49,135 +58,100 @@ const Gallery = () => {
     setSelectedImage(null);
   };
 
-  // Calculate the start and end index of the current page items
-  const startIndex = currentPage * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentImages = images.slice(startIndex, endIndex);
+  const handleNextPage = () => {
+    if ((page + 1) * imagesPerPage < images.length) {
+      setPage(page + 1);
+    }
+  };
 
-  // Intersection Observer hook to detect when gallery section is in view
-  const { ref, inView } = useInView({
-    triggerOnce: true, // Trigger only once when it comes into view
-    threshold: 0.1,    // Trigger when 10% of the section is visible
-  });
+  const handlePrevPage = () => {
+    if (page > 0) {
+      setPage(page - 1);
+    }
+  };
 
   return (
-    <Box
-      id="gallery"
-      py={5}
-      sx={{ overflow: 'hidden', opacity: inView ? 1 : 0, transition: 'opacity 0.5s ease-out' }} // Fade-in effect on scroll
-      ref={ref}
-    >
-      <Typography variant="h4" gutterBottom>
+    <Box id="gallery" py={5} sx={{ textAlign: "start" }}>
+      <Typography variant="h4" gutterBottom my={4}>
         Gallery
       </Typography>
-      <Grid container spacing={2} position="relative">
-        <div
-          style={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: '20px',
-          }}
-        >
-          <div style={{ width: '10%' }}>
-            {/* Left Arrow Icon Button with Slide transition */}
-            <Slide direction="left" in={currentPage > 0} mountOnEnter unmountOnExit>
-              <IconButton
-                onClick={handlePrevPage}
-                disabled={currentPage === 0}
-                sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '10px',
-                  marginRight:'10px',
-                  zIndex: 1,
-                  color: currentPage === 0 ? '#aaa' : '#000',
-                  transform: 'translateY(-50%)',
-                  '&:hover': { backgroundColor: 'transparent' },
-                }}
-              >
-                <ArrowBackIosIcon sx={{ color: '#fff', mr: 4 }} />
-              </IconButton>
-            </Slide>
-          </div>
-          <div
-            style={{
-              width: '80%',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
+      <Grid
+        container
+        spacing={1}
+        sx={{
+          display: "grid",
+          gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
+          gap: "8px",
+          justifyContent: "center",
+          gridAutoFlow: "dense",
+        }}
+      >
+        {images.slice(page * imagesPerPage, (page + 1) * imagesPerPage).map((image) => (
+          <Paper
+            key={image.id}
+            elevation={3}
+            sx={{
+              cursor: "pointer",
+              overflow: "hidden",
+              position: "relative",
+              transition: "transform 0.3s ease",
+              "&:hover": { transform: "scale(1.05)" },
+              "&:hover::before": {
+                content: '""',
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                background: "linear-gradient(120deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%)",
+                opacity: 0,
+                transition: "opacity 0.4s ease-in-out",
+              },
+              "&:hover::before": {
+                opacity: 1,
+              },
             }}
+            onClick={() => handleImageClick(image)}
           >
-            {/* Gallery Items with Fade transition */}
-            <Grid container spacing={2} direction="row" justifyContent="center" alignItems="center">
-              {currentImages.map((image) => (
-                <Grid item xs={12} sm={6} md={3} key={image.id}>
-                  <Fade in={true} timeout={1000}>
-                    <Paper
-                      elevation={2}
-                      sx={{
-                        padding: 1,
-                        cursor: 'pointer',
-                        transition: 'transform 0.3s ease',
-                        '&:hover': { transform: 'scale(1.05)' },
-                      }}
-                      onClick={() => handleImageClick(image)}
-                    >
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        style={{
-                          width: '100%',
-                          objectFit: 'cover',
-                          borderRadius: '8px',
-                          transition: 'transform 0.3s ease-in-out',
-                        }}
-                      />
-                    </Paper>
-                  </Fade>
-                </Grid>
-              ))}
-            </Grid>
-          </div>
-          <div style={{ width: '10%' }}>
-            {/* Right Arrow Icon Button with Slide transition */}
-            <Slide direction="right" in={currentPage < Math.ceil(images.length / ITEMS_PER_PAGE) - 1} mountOnEnter unmountOnExit>
-              <IconButton
-                onClick={handleNextPage}
-                disabled={(currentPage + 1) * ITEMS_PER_PAGE >= images.length}
-                sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  right: 0,
-                  zIndex: 1,
-                  marginLeft: '10px',
-                  color: (currentPage + 1) * ITEMS_PER_PAGE >= images.length ? '#aaa' : '#000',
-                  transform: 'translateY(-50%)',
-                  '&:hover': { backgroundColor: 'transparent' },
-                }}
-              >
-                <ArrowForwardIosIcon sx={{ color: '#fff', ml: 4 }} />
-              </IconButton>
-            </Slide>
-          </div>
-        </div>
+            <img
+              src={image.src}
+              alt={image.alt}
+              style={{
+                width: "100%",
+                height: "auto",
+                maxHeight: "250px",
+                objectFit: "cover",
+                borderRadius: "8px",
+              }}
+            />
+          </Paper>
+        ))}
       </Grid>
+
+      {isMobile && (
+        <Box display="flex" justifyContent="center" mt={2}>
+          <IconButton onClick={handlePrevPage} disabled={page === 0}>
+            <ArrowBack />
+          </IconButton>
+          <Typography variant="body1" sx={{ marginTop: '10px', marginLeft: '20px', marginRight: '20px' }}>{` ${page + 1}`}</Typography>
+          <IconButton onClick={handleNextPage} disabled={(page + 1) * imagesPerPage >= images.length}>
+            <ArrowForward />
+          </IconButton>
+        </Box>
+      )}
 
       {/* Full-Screen Image Dialog */}
       <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="lg" fullWidth>
-        <Box position="relative">
+        <Box position="relative" textAlign="center" sx={{backgroundColor:"rgba(0,0,0,0)"}}>
           <IconButton
             onClick={handleCloseDialog}
             sx={{
-              position: 'absolute',
+              position: "absolute",
               top: 8,
               right: 8,
-              color: '#fff',
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-              '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.8)' },
+              color: "#fff",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.8)" },
             }}
           >
             <CloseIcon />
@@ -186,7 +160,12 @@ const Gallery = () => {
             <img
               src={selectedImage.src}
               alt={selectedImage.alt}
-              style={{ width: '100%', height: 'auto', maxHeight: '90vh', borderRadius: '8px' }}
+              style={{
+                width: "auto",
+                maxWidth: "90vw",
+                height: "auto",
+                maxHeight: "90vh", 
+              }}
             />
           )}
         </Box>
