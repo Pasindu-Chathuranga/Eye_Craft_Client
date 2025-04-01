@@ -100,8 +100,9 @@ const AddOrderPage = () => {
       </Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Card sx={{ bgcolor: '#E0E0E0', p: 2 }}>
-            <CardContent>
+          <Card sx={{ bgcolor: "#E0E0E0", p: 2, pt: 0 }}>
+            {/* Ensure image sits at the very top without gaps */}
+            <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
               <CustomImage
                 eyeCount={orderData.Eye_Count}
                 frame={orderData.Frames}
@@ -109,16 +110,19 @@ const AddOrderPage = () => {
                 effect={orderData.Effects}
                 duoEffect={orderData.Duo_Irish_effect}
               />
+            </Box>
+
+            <CardContent sx={{ pt: 0, pb: 2 }}>
               <List>
                 <Grid container spacing={1}>
                   {Object.entries(orderData).map(([key, value]) => (
-                    <Grid item xs={12} sm={6} key={key} >
-                      <ListItem sx={{ py: 0.1, my: 0.1, position: 'relative' }}>
+                    <Grid item xs={12} sm={6} key={key}>
+                      <ListItem sx={{ py: 0.1, my: 0.1, position: "relative" }}>
                         <ListItemIcon>{icons[key]}</ListItemIcon>
                         <ListItemText
-                          primary={key.replace(/_/g, ' ')}
-                          secondary={value || 'Not selected'}
-                          primaryTypographyProps={{ color: '#326a80' }}
+                          primary={key.replace(/_/g, " ")}
+                          secondary={value || "Not selected"}
+                          primaryTypographyProps={{ color: "#326a80" }}
                         />
                       </ListItem>
                     </Grid>
@@ -127,8 +131,9 @@ const AddOrderPage = () => {
               </List>
             </CardContent>
           </Card>
+
         </Grid>
-        <Grid item xs={12} md={6}> 
+        <Grid item xs={12} md={6}>
           <form onSubmit={handleSubmit}>
             {Object.keys(filters).map((key) => (
               <Autocomplete
