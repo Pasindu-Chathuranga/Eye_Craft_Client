@@ -21,7 +21,9 @@ import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 import { CheckCircle, Palette, FormatSize, FilterFrames, BlurOn } from '@mui/icons-material';
 import CustomImage from '../components/CustomeImage';
-
+import CustomerDetailsDialog from '../components/CustomerDetailsDialog';
+import axios from 'axios';
+import { API_URL } from '../const/api_url';
 const icons = {
   Eye_Count: <CheckCircle sx={{ color: '#6e92a7' }} />,
   Print_Style: <Palette sx={{ color: '#6e92a7' }} />,
@@ -42,6 +44,7 @@ const AddOrderPage = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [customerData, setCustomerData] = useState({ name: '', address: '', contact: '', email: '' });
   const [errors, setErrors] = useState({});
+  const [orderStatus, setOrderStatus] = useState({ open: false, message: '', type: '' });
   const [filters, setFilters] = useState({
     Eye_Count: ['Single iris', 'Duo iris', 'Trio iris', 'Quadruple iris'],
     Print_Style: ['Paper-based print'],
@@ -64,7 +67,6 @@ const AddOrderPage = () => {
   }, [orderData.Sizes]);
 
   useEffect(() => {
-    console.log(orderData.Eye_Count)
     if (orderData.Eye_Count === 'Duo iris') {
       setFilters((prev) => ({
         ...prev,
@@ -92,6 +94,27 @@ const AddOrderPage = () => {
       setOpenDialog(true);
     }
   };
+
+
+  const submitOrder = async () => {
+    console.log({ 'order': orderData, 'customer': customerData });
+    try {
+      const response = await axios.post(API_URL + '/order/add', { 'order': orderData, 'customer': customerData });  
+      setOrderStatus({ open: true, message: 'Your order has been placed successfully!', type: 'success' });
+      setCustomerData({ name: '', address: '', contact: '', email: '' })
+      setOrderData({
+        Eye_Count: 'Single iris',
+        Print_Style: 'Paper-based print',
+        Sizes: '20cmx20cm',
+        Effects: 'Pure effect image',
+        Frames: 'Standard frame picture'
+      })
+    } catch (error) {
+      console.error('Error submitting order:', error); 
+      setOrderStatus({ open: true, message: 'Failed to submit your order. Please try again.', type: 'error' });
+    }
+  };
+
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', p: 2 }}>
@@ -152,28 +175,27 @@ const AddOrderPage = () => {
           </form>
         </Grid>
       </Grid>
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)} fullWidth maxWidth="sm">
-        <DialogTitle textAlign="center">Enter Contact Details</DialogTitle>
+
+      <CustomerDetailsDialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        onSubmit={() => submitOrder()} // Replace with your real submit logic
+        customerData={customerData}
+        setCustomerData={setCustomerData}
+        errors={errors}
+      />
+
+      {/* Success/Error dialog */}
+      <Dialog open={orderStatus.open} onClose={() => setOrderStatus({ ...orderStatus, open: false })}>
+        <DialogTitle>{orderStatus.type === 'success' ? 'Order Submitted' : 'Order Submission Failed'}</DialogTitle>
         <DialogContent>
-          <Grid container spacing={2}>
-            {['name', 'address', 'contact', 'email'].map((field) => (
-              <TextField
-                key={field}
-                fullWidth
-                label={field.charAt(0).toUpperCase() + field.slice(1)}
-                name={field}
-                onChange={(e) => setCustomerData({ ...customerData, [field]: e.target.value })}
-                sx={{ mb: 2 }}
-                error={!!errors[field]}
-                helperText={errors[field]}
-              />
-            ))}
-          </Grid>
+          <Typography variant="body1" color={orderStatus.type === 'success' ? 'green' : 'red'}>
+            {orderStatus.message}
+          </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
-          <Button onClick={() => console.log('Order Submitted:', { orderData, customerData })} variant="contained">
-            Submit Order
+          <Button onClick={() => setOrderStatus({ ...orderStatus, open: false })} color="primary">
+            Close
           </Button>
         </DialogActions>
       </Dialog>
