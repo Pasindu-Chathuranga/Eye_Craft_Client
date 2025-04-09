@@ -48,8 +48,8 @@ const Step = ({ icon, title, content, image, index }) => {
                 alt={title}
                 sx={{
                   width: '100%',
-                  height: '150px',
-                  mt: 2,
+                  height: '200px',
+                  mt: 3,
                   borderRadius: '5px',
                   objectFit: 'cover',
                   display: 'block',

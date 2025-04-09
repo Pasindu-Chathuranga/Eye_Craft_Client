@@ -57,7 +57,7 @@ const StatusDialog = ({ open, onClose, status }) => {
                             <Divider sx={{ my: 2 }} />
                             <Typography variant="body2" color="textSecondary">
                                 We appreciate your order. Our team will process it shortly and reach out with the next steps.
-                            </Typography>
+                            </Typography>  
                         </>
                     )}
                 </DialogContent>

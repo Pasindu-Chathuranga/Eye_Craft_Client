@@ -139,7 +139,7 @@ const AddOrderPage = () => {
       </Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Card sx={{ bgcolor: '#E0E0E0', p: 2, pt: 0 }}>
+          <Card sx={{ bgcolor: '#E0E0E0', p: 2, pt: 0, pb: 0 }}>
             <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
               <CustomImage
                 eyeCount={orderData.Eye_Count}
@@ -150,7 +150,7 @@ const AddOrderPage = () => {
               />
             </Box>
 
-            <CardContent sx={{ pt: 0, pb: 2 }}>
+            <CardContent sx={{ pt: 0, pb: 0 }}>
               <List>
                 <Grid container spacing={1}>
                   {Object.entries(orderData).map(([key, value]) => (
