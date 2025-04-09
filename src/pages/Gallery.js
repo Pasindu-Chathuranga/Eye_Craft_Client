@@ -94,8 +94,8 @@ const Gallery = () => {
               cursor: "pointer",
               overflow: "hidden",
               position: "relative",
-              transition: "transform 0.3s ease",
-              "&:hover": { transform: "scale(1.05)" },
+              transition: "0.4s ease-in-out all",
+              "&:hover": { transform: "scale(1.02)" },
               "&:hover::before": {
                 content: '""',
                 position: "absolute",
