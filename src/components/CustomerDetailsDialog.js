@@ -6,10 +6,12 @@ import {
     DialogActions,
     Grid,
     TextField,
-    Button
-} from '@mui/material';
+    Button,
+    CircularProgress
+} from '@mui/material'; 
+import { motion } from 'framer-motion';
 
-const CustomerDetailsDialog = ({ open, onClose, onSubmit, customerData, setCustomerData }) => {
+const CustomerDetailsDialog = ({ open, onClose, onSubmit, customerData, setCustomerData, loader }) => {
     const fields = ['name', 'email', 'contact', 'address'];
     const [localErrors, setLocalErrors] = useState({});
 
@@ -79,10 +81,12 @@ const CustomerDetailsDialog = ({ open, onClose, onSubmit, customerData, setCusto
                 </Grid>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose}>Cancel</Button>
-                <Button onClick={handleSubmit} variant="contained">
-                    Submit Order
-                </Button>
+                <Button onClick={onClose} disabled={loader}>Cancel</Button>
+                <motion.div whileHover={{ scale: 1.05 }}>
+                    <Button onClick={handleSubmit} variant="contained" fullWidth disabled={loader}>
+                        {loader ? <CircularProgress size={24} color="inherit" /> : ' Submit Order'}
+                    </Button>
+                </motion.div>
             </DialogActions>
         </Dialog>
     );

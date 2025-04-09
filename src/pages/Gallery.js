@@ -27,13 +27,11 @@ import image13 from "../assets/gallary/13.jpg";
 const images = [
   { id: 1, src: image1, alt: "Image 1" },
   { id: 2, src: image2, alt: "Image 2" },
-  { id: 3, src: image3, alt: "Image 3" },
-  { id: 4, src: image4, alt: "Image 4" },
+  { id: 3, src: image3, alt: "Image 3" }, 
   { id: 5, src: image5, alt: "Image 5" },
   { id: 6, src: image6, alt: "Image 6" },
   { id: 7, src: image7, alt: "Image 7" },
-  { id: 8, src: image8, alt: "Image 8" },
-  { id: 9, src: image9, alt: "Image 9" },
+  { id: 8, src: image8, alt: "Image 8" }, 
   { id: 10, src: image10, alt: "Image 10" },
   { id: 11, src: image11, alt: "Image 11" },
   { id: 12, src: image12, alt: "Image 12" },
@@ -118,9 +116,8 @@ const Gallery = () => {
               alt={image.alt}
               style={{
                 width: "100%",
-                height: "auto",
-                maxHeight: "250px",
-                objectFit: "cover",
+                height: "100%", // Ensures same height and width
+                objectFit: "cover", // Ensures images maintain aspect ratio without stretching
                 borderRadius: "8px",
               }}
             />
@@ -142,7 +139,7 @@ const Gallery = () => {
 
       {/* Full-Screen Image Dialog */}
       <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="lg" fullWidth>
-        <Box position="relative" textAlign="center" sx={{backgroundColor:"rgba(0,0,0,0)"}}>
+        <Box position="relative" textAlign="center" sx={{ backgroundColor: "rgba(0,0,0,0)" }}>
           <IconButton
             onClick={handleCloseDialog}
             sx={{
@@ -164,7 +161,7 @@ const Gallery = () => {
                 width: "auto",
                 maxWidth: "90vw",
                 height: "auto",
-                maxHeight: "90vh", 
+                maxHeight: "90vh",
               }}
             />
           )}

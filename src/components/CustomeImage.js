@@ -1,5 +1,4 @@
-import { ArrowBack, ArrowDownward, ArrowForward, ArrowUpward } from '@mui/icons-material';
-import { useEffect, useState } from 'react';
+ import { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 
 import singleExplosionProfessional from '../images/website eye pics/Single explosion professional.jpg'
@@ -22,7 +21,7 @@ import DuoPureStandard from '../images/website eye pics/Duo pure.jpg'
 import TrioPureStandard from '../images/website eye pics/Trio pure.jpg'
 import QuadruplePureStandard from '../images/website eye pics/Quadruple pure.jpg'
 
-// Halo effect images
+// Halo effects
 import singleHaloProfessional from '../images/website eye pics/Single halo professional.jpg';
 import DuoHaloProfessional from '../images/website eye pics/Duo halo professional.jpg';
 import TrioHaloProfessional from '../images/website eye pics/Trio halo professional.jpg';
@@ -33,7 +32,7 @@ import DuoHaloStandard from '../images/website eye pics/Duo halo.jpg';
 import TrioHaloStandard from '../images/website eye pics/Trio halo.jpg';
 import QuadrupleHaloStandard from '../images/website eye pics/Quadruple halo.jpg';
 
-// Dust effect images
+// Dust effects
 import singleDustProfessional from '../images/website eye pics/Single dust. professional.jpg';
 import TrioDustProfessional from '../images/website eye pics/Trio dust professional.jpg';
 import QuadrupleDustProfessional from '../images/website eye pics/Quadruple dust professional.jpg';
@@ -42,7 +41,7 @@ import singleDustStandard from '../images/website eye pics/Single dust.jpg';
 import TrioDustStandard from '../images/website eye pics/Trio dust.jpg';
 import QuadrupleDustStandard from '../images/website eye pics/Quadruple dust.jpg';
 
-// Dust effect images
+// Dust effects
 import DuoYingYangProfessional from '../images/website eye pics/Duo ying yang professional.jpg';
 import DuoInfinityProfessional from '../images/website eye pics/Duo infinity. professional.jpg';
 import DuoFusionProfessional from '../images/website eye pics/Duo fusion professional.jpg';
@@ -54,53 +53,53 @@ import DuoInFusionStandard from '../images/website eye pics/Duo fusion.jpg';
 
 
 const Images = [
-    // Pure effect images
-    { eyeCount: 'Single iris', effect: 'Pure effect image', frame: 'Professional frame picture', image: singlePureProfessional },
-    { eyeCount: 'Single iris', effect: 'Pure effect image', frame: 'Standard frame picture', image: singlePureStandard },
-    { eyeCount: 'Duo iris', effect: 'Pure effect image', frame: 'Professional frame picture', image: DuoPureProfessional },
-    { eyeCount: 'Duo iris', effect: 'Pure effect image', frame: 'Standard frame picture', image: DuoPureStandard },
-    { eyeCount: 'Trio iris', effect: 'Pure effect image', frame: 'Professional frame picture', image: TrioPureProfessional },
-    { eyeCount: 'Trio iris', effect: 'Pure effect image', frame: 'Standard frame picture', image: TrioPureStandard },
-    { eyeCount: 'Quadruple iris', effect: 'Pure effect image', frame: 'Professional frame picture', image: QuadruplePureProfessional },
-    { eyeCount: 'Quadruple iris', effect: 'Pure effect image', frame: 'Standard frame picture', image: QuadruplePureStandard },
+    // Pure effects
+    { eyeCount: 'Single iris', effect: 'Pure effect', frame: 'Professional frame picture', image: singlePureProfessional },
+    { eyeCount: 'Single iris', effect: 'Pure effect', frame: 'Standard frame picture', image: singlePureStandard },
+    { eyeCount: 'Duo iris', effect: 'Pure effect', frame: 'Professional frame picture', image: DuoPureProfessional },
+    { eyeCount: 'Duo iris', effect: 'Pure effect', frame: 'Standard frame picture', image: DuoPureStandard },
+    { eyeCount: 'Trio iris', effect: 'Pure effect', frame: 'Professional frame picture', image: TrioPureProfessional },
+    { eyeCount: 'Trio iris', effect: 'Pure effect', frame: 'Standard frame picture', image: TrioPureStandard },
+    { eyeCount: 'Quadruple iris', effect: 'Pure effect', frame: 'Professional frame picture', image: QuadruplePureProfessional },
+    { eyeCount: 'Quadruple iris', effect: 'Pure effect', frame: 'Standard frame picture', image: QuadruplePureStandard },
 
-    // Explosion effect images
-    { eyeCount: 'Single iris', effect: 'Explosion effect image', frame: 'Professional frame picture', image: singleExplosionProfessional },
-    { eyeCount: 'Single iris', effect: 'Explosion effect image', frame: 'Standard frame picture', image: singleExplosionStandard },
-    { eyeCount: 'Duo iris', effect: 'Explosion effect image', frame: 'Professional frame picture', image: DuoExplosionProfessional },
-    { eyeCount: 'Duo iris', effect: 'Explosion effect image', frame: 'Standard frame picture', image: DuoExplosionStandard },
-    { eyeCount: 'Trio iris', effect: 'Explosion effect image', frame: 'Professional frame picture', image: TrioExplosionProfessional },
-    { eyeCount: 'Trio iris', effect: 'Explosion effect image', frame: 'Standard frame picture', image: TrioExplosionStandard },
-    { eyeCount: 'Quadruple iris', effect: 'Explosion effect image', frame: 'Professional frame picture', image: QuadrupleExplosionProfessional },
-    { eyeCount: 'Quadruple iris', effect: 'Explosion effect image', frame: 'Standard frame picture', image: QuadrupleExplosionStandard },
+    // Explosion effects
+    { eyeCount: 'Single iris', effect: 'Explosion effect', frame: 'Professional frame picture', image: singleExplosionProfessional },
+    { eyeCount: 'Single iris', effect: 'Explosion effect', frame: 'Standard frame picture', image: singleExplosionStandard },
+    { eyeCount: 'Duo iris', effect: 'Explosion effect', frame: 'Professional frame picture', image: DuoExplosionProfessional },
+    { eyeCount: 'Duo iris', effect: 'Explosion effect', frame: 'Standard frame picture', image: DuoExplosionStandard },
+    { eyeCount: 'Trio iris', effect: 'Explosion effect', frame: 'Professional frame picture', image: TrioExplosionProfessional },
+    { eyeCount: 'Trio iris', effect: 'Explosion effect', frame: 'Standard frame picture', image: TrioExplosionStandard },
+    { eyeCount: 'Quadruple iris', effect: 'Explosion effect', frame: 'Professional frame picture', image: QuadrupleExplosionProfessional },
+    { eyeCount: 'Quadruple iris', effect: 'Explosion effect', frame: 'Standard frame picture', image: QuadrupleExplosionStandard },
 
-    // Halo effect images
-    { eyeCount: 'Single iris', effect: 'Halo effect image', frame: 'Professional frame picture', image: singleHaloProfessional },
-    { eyeCount: 'Single iris', effect: 'Halo effect image', frame: 'Standard frame picture', image: singleHaloStandard },
-    { eyeCount: 'Duo iris', effect: 'Halo effect image', frame: 'Professional frame picture', image: DuoHaloProfessional },
-    { eyeCount: 'Duo iris', effect: 'Halo effect image', frame: 'Standard frame picture', image: DuoHaloStandard },
-    { eyeCount: 'Trio iris', effect: 'Halo effect image', frame: 'Professional frame picture', image: TrioHaloProfessional },
-    { eyeCount: 'Trio iris', effect: 'Halo effect image', frame: 'Standard frame picture', image: TrioHaloStandard },
-    { eyeCount: 'Quadruple iris', effect: 'Halo effect image', frame: 'Professional frame picture', image: QuadrupleHaloProfessional },
-    { eyeCount: 'Quadruple iris', effect: 'Halo effect image', frame: 'Standard frame picture', image: QuadrupleHaloStandard },
+    // Halo effects
+    { eyeCount: 'Single iris', effect: 'Halo effect', frame: 'Professional frame picture', image: singleHaloProfessional },
+    { eyeCount: 'Single iris', effect: 'Halo effect', frame: 'Standard frame picture', image: singleHaloStandard },
+    { eyeCount: 'Duo iris', effect: 'Halo effect', frame: 'Professional frame picture', image: DuoHaloProfessional },
+    { eyeCount: 'Duo iris', effect: 'Halo effect', frame: 'Standard frame picture', image: DuoHaloStandard },
+    { eyeCount: 'Trio iris', effect: 'Halo effect', frame: 'Professional frame picture', image: TrioHaloProfessional },
+    { eyeCount: 'Trio iris', effect: 'Halo effect', frame: 'Standard frame picture', image: TrioHaloStandard },
+    { eyeCount: 'Quadruple iris', effect: 'Halo effect', frame: 'Professional frame picture', image: QuadrupleHaloProfessional },
+    { eyeCount: 'Quadruple iris', effect: 'Halo effect', frame: 'Standard frame picture', image: QuadrupleHaloStandard },
 
-    // Dust effect images
-    { eyeCount: 'Single iris', effect: 'Dust effect image', frame: 'Professional frame picture', image: singleDustProfessional },
-    { eyeCount: 'Single iris', effect: 'Dust effect image', frame: 'Standard frame picture', image: singleDustStandard },
-    { eyeCount: 'Trio iris', effect: 'Dust effect image', frame: 'Professional frame picture', image: TrioDustProfessional },
-    { eyeCount: 'Trio iris', effect: 'Dust effect image', frame: 'Standard frame picture', image: TrioDustStandard },
-    { eyeCount: 'Quadruple iris', effect: 'Dust effect image', frame: 'Professional frame picture', image: QuadrupleDustProfessional },
-    { eyeCount: 'Quadruple iris', effect: 'Dust effect image', frame: 'Standard frame picture', image: QuadrupleDustStandard },
+    // Dust effects
+    { eyeCount: 'Single iris', effect: 'Dust effect', frame: 'Professional frame picture', image: singleDustProfessional },
+    { eyeCount: 'Single iris', effect: 'Dust effect', frame: 'Standard frame picture', image: singleDustStandard },
+    { eyeCount: 'Trio iris', effect: 'Dust effect', frame: 'Professional frame picture', image: TrioDustProfessional },
+    { eyeCount: 'Trio iris', effect: 'Dust effect', frame: 'Standard frame picture', image: TrioDustStandard },
+    { eyeCount: 'Quadruple iris', effect: 'Dust effect', frame: 'Professional frame picture', image: QuadrupleDustProfessional },
+    { eyeCount: 'Quadruple iris', effect: 'Dust effect', frame: 'Standard frame picture', image: QuadrupleDustStandard },
 
     // Duo iris effect images 
-    { eyeCount: 'Duo iris', effect: 'Yin Yang', frame: 'Professional frame picture', image: DuoYingYangProfessional },
-    { eyeCount: 'Duo iris', effect: 'Infinity', frame: 'Professional frame picture', image: DuoInfinityProfessional },
-    { eyeCount: 'Duo iris', effect: 'Fusion', frame: 'Professional frame picture', image: DuoFusionProfessional },
+    { eyeCount: 'Duo iris', effect: 'Yin Yang effect', frame: 'Professional frame picture', image: DuoYingYangProfessional },
+    { eyeCount: 'Duo iris', effect: 'Infinity effect', frame: 'Professional frame picture', image: DuoInfinityProfessional },
+    { eyeCount: 'Duo iris', effect: 'Fusion effect', frame: 'Professional frame picture', image: DuoFusionProfessional },
 
 
-    { eyeCount: 'Duo iris', effect: 'Infinity', frame: 'Standard frame picture', image: DuoInfinityStandard },
-    { eyeCount: 'Duo iris', effect: 'Yin Yang', frame: 'Standard frame picture', image: DuoYingYangStandard },
-    { eyeCount: 'Duo iris', effect: 'Fusion', frame: 'Standard frame picture', image: DuoInFusionStandard },
+    { eyeCount: 'Duo iris', effect: 'Infinity effect', frame: 'Standard frame picture', image: DuoInfinityStandard },
+    { eyeCount: 'Duo iris', effect: 'Yin Yang effect', frame: 'Standard frame picture', image: DuoYingYangStandard },
+    { eyeCount: 'Duo iris', effect: 'Fusion effect', frame: 'Standard frame picture', image: DuoInFusionStandard },
 
 ];
 

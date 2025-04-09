@@ -15,7 +15,8 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemText
+  ListItemText,
+  CircularProgress
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
@@ -24,6 +25,8 @@ import CustomImage from '../components/CustomeImage';
 import CustomerDetailsDialog from '../components/CustomerDetailsDialog';
 import axios from 'axios';
 import { API_URL } from '../const/api_url';
+import StatusDialog from '../components/StatusDialog';
+
 const icons = {
   Eye_Count: <CheckCircle sx={{ color: '#6e92a7' }} />,
   Print_Style: <Palette sx={{ color: '#6e92a7' }} />,
@@ -34,11 +37,12 @@ const icons = {
 
 const AddOrderPage = () => {
   const theme = useTheme();
+  const [loading, setLoading] = useState(false);
   const [orderData, setOrderData] = useState({
     Eye_Count: 'Single iris',
     Print_Style: 'Paper-based print',
     Sizes: '20cmx20cm',
-    Effects: 'Pure effect image',
+    Effects: 'Pure effect',
     Frames: 'Standard frame picture'
   });
   const [openDialog, setOpenDialog] = useState(false);
@@ -49,7 +53,7 @@ const AddOrderPage = () => {
     Eye_Count: ['Single iris', 'Duo iris', 'Trio iris', 'Quadruple iris'],
     Print_Style: ['Paper-based print'],
     Sizes: ['20cmx20cm', '30cmx30cm', '40cmx40cm', '50cmx50cm'],
-    Effects: ['Pure effect image', 'Explosion effect image', 'Halo effect image', 'Dust effect image'],
+    Effects: ['Pure effect', 'Explosion effect', 'Halo effect', 'Dust effect'],
     Frames: ['Professional frame picture', 'Standard frame picture']
   });
   const [recentlyChanged, setRecentlyChanged] = useState({});
@@ -70,12 +74,12 @@ const AddOrderPage = () => {
     if (orderData.Eye_Count === 'Duo iris') {
       setFilters((prev) => ({
         ...prev,
-        Effects: ['Yin Yang', 'Infinity', 'Fusion', 'Pure effect image', 'Explosion effect image', 'Halo effect image']
+        Effects: ['Yin Yang effect', 'Infinity effect', 'Fusion effect', 'Pure effect', 'Explosion effect', 'Halo effect']
       }));
     } else {
       setFilters((prev) => ({
         ...prev,
-        Effects: ['Pure effect image', 'Explosion effect image', 'Halo effect image', 'Dust effect image']
+        Effects: ['Pure effect', 'Explosion effect', 'Halo effect', 'Dust effect']
       }));
     }
   }, [orderData.Eye_Count]);
@@ -95,26 +99,38 @@ const AddOrderPage = () => {
     }
   };
 
-
   const submitOrder = async () => {
-    console.log({ 'order': orderData, 'customer': customerData });
+    setLoading(true);
     try {
-      const response = await axios.post(API_URL + '/order/add', { 'order': orderData, 'customer': customerData });  
-      setOrderStatus({ open: true, message: 'Your order has been placed successfully!', type: 'success' });
-      setCustomerData({ name: '', address: '', contact: '', email: '' })
+      const response = await axios.post(API_URL + '/order/add', {
+        order: { ...orderData, Status: 'Pending' },
+        customer: customerData
+      });
+      setOrderStatus({
+        open: true,
+        message: 'Your order has been placed successfully!',
+        type: 'success'
+      });
+      setCustomerData({ name: '', address: '', contact: '', email: '' });
       setOrderData({
         Eye_Count: 'Single iris',
         Print_Style: 'Paper-based print',
         Sizes: '20cmx20cm',
-        Effects: 'Pure effect image',
+        Effects: 'Pure effect',
         Frames: 'Standard frame picture'
-      })
+      });
+      setOpenDialog(false);
     } catch (error) {
-      console.error('Error submitting order:', error); 
-      setOrderStatus({ open: true, message: 'Failed to submit your order. Please try again.', type: 'error' });
+      console.error('Error submitting order:', error);
+      setOrderStatus({
+        open: true,
+        message: 'Failed to submit your order. Please try again.',
+        type: 'error'
+      });
+    } finally {
+      setLoading(false);
     }
   };
-
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', p: 2 }}>
@@ -123,9 +139,8 @@ const AddOrderPage = () => {
       </Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Card sx={{ bgcolor: "#E0E0E0", p: 2, pt: 0 }}>
-            {/* Ensure image sits at the very top without gaps */}
-            <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
+          <Card sx={{ bgcolor: '#E0E0E0', p: 2, pt: 0 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
               <CustomImage
                 eyeCount={orderData.Eye_Count}
                 frame={orderData.Frames}
@@ -140,12 +155,12 @@ const AddOrderPage = () => {
                 <Grid container spacing={1}>
                   {Object.entries(orderData).map(([key, value]) => (
                     <Grid item xs={12} sm={6} key={key}>
-                      <ListItem sx={{ py: 0.1, my: 0.1, position: "relative" }}>
+                      <ListItem sx={{ py: 0.1, my: 0.1, position: 'relative' }}>
                         <ListItemIcon>{icons[key]}</ListItemIcon>
                         <ListItemText
-                          primary={key.replace(/_/g, " ")}
-                          secondary={value || "Not selected"}
-                          primaryTypographyProps={{ color: "#326a80" }}
+                          primary={key.replace(/_/g, ' ')}
+                          secondary={value || 'Not selected'}
+                          primaryTypographyProps={{ color: '#326a80' }}
                         />
                       </ListItem>
                     </Grid>
@@ -154,7 +169,6 @@ const AddOrderPage = () => {
               </List>
             </CardContent>
           </Card>
-
         </Grid>
         <Grid item xs={12} md={6}>
           <form onSubmit={handleSubmit}>
@@ -164,12 +178,14 @@ const AddOrderPage = () => {
                 options={filters[key]}
                 onChange={(_, value) => handleSelectChange(key, value)}
                 value={orderData[key]}
-                renderInput={(params) => <TextField {...params} label={key.replace(/_/g, ' ')} fullWidth sx={{ mb: 2 }} />}
+                renderInput={(params) => (
+                  <TextField {...params} label={key.replace(/_/g, ' ')} fullWidth sx={{ mb: 2 }} />
+                )}
               />
             ))}
             <motion.div whileHover={{ scale: 1.05 }}>
-              <Button type="submit" variant="contained" fullWidth>
-                Proceed
+              <Button type="submit" variant="contained" fullWidth disabled={loading}>
+                {loading ? <CircularProgress size={24} color="inherit" /> : 'Proceed'}
               </Button>
             </motion.div>
           </form>
@@ -179,26 +195,19 @@ const AddOrderPage = () => {
       <CustomerDetailsDialog
         open={openDialog}
         onClose={() => setOpenDialog(false)}
-        onSubmit={() => submitOrder()} // Replace with your real submit logic
+        onSubmit={submitOrder}
         customerData={customerData}
+        loader={loading}
         setCustomerData={setCustomerData}
         errors={errors}
       />
 
       {/* Success/Error dialog */}
-      <Dialog open={orderStatus.open} onClose={() => setOrderStatus({ ...orderStatus, open: false })}>
-        <DialogTitle>{orderStatus.type === 'success' ? 'Order Submitted' : 'Order Submission Failed'}</DialogTitle>
-        <DialogContent>
-          <Typography variant="body1" color={orderStatus.type === 'success' ? 'green' : 'red'}>
-            {orderStatus.message}
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOrderStatus({ ...orderStatus, open: false })} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <StatusDialog
+        open={orderStatus.open}
+        onClose={() => setOrderStatus({ ...orderStatus, open: false })}
+        status={orderStatus}
+      />
     </Box>
   );
 };
