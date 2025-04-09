@@ -10,7 +10,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { Close as CloseIcon, ArrowBack, ArrowForward } from "@mui/icons-material";
-import image1 from "../assets/gallary/1.jpg";
+import image1 from "../assets/gallary/1.JPG";
 import image2 from "../assets/gallary/2.png";
 import image3 from "../assets/gallary/3.jpg";
 import image4 from "../assets/gallary/4.jpg";
