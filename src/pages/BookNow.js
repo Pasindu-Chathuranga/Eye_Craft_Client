@@ -133,7 +133,7 @@ const AddOrderPage = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', p: 2 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', p: 2 }}>
       <Typography variant="h4" gutterBottom>
         Customize Your Order
       </Typography>
@@ -150,7 +150,7 @@ const AddOrderPage = () => {
               />
             </Box>
 
-            <CardContent sx={{ pt: 0, pb: 0 }}>
+            {/* <CardContent sx={{ pt: 0, pb: 0 }}>
               <List>
                 <Grid container spacing={1}>
                   {Object.entries(orderData).map(([key, value]) => (
@@ -167,7 +167,7 @@ const AddOrderPage = () => {
                   ))}
                 </Grid>
               </List>
-            </CardContent>
+            </CardContent> */}
           </Card>
         </Grid>
         <Grid item xs={12} md={6}>
