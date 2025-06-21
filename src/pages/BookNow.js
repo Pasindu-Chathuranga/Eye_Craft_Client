@@ -39,7 +39,7 @@ const AddOrderPage = () => {
   const theme = useTheme();
   const [loading, setLoading] = useState(false);
   const [orderData, setOrderData] = useState({
-    Eye_Count: 'Single iris',
+    Eye_Count: 'One Person',
     Print_Style: 'Paper-based print',
     Sizes: '20cmx20cm',
     Effects: 'Pure effect',
@@ -50,7 +50,7 @@ const AddOrderPage = () => {
   const [errors, setErrors] = useState({});
   const [orderStatus, setOrderStatus] = useState({ open: false, message: '', type: '' });
   const [filters, setFilters] = useState({
-    Eye_Count: ['Single iris', 'Duo iris', 'Trio iris', 'Quadruple iris'],
+    Eye_Count: ['One Person', 'Two Person', 'Three Person', 'Four Person'],
     Print_Style: ['Paper-based print'],
     Sizes: ['20cmx20cm', '30cmx30cm', '40cmx40cm', '50cmx50cm'],
     Effects: ['Pure effect', 'Explosion effect', 'Halo effect', 'Dust effect'],
@@ -71,7 +71,7 @@ const AddOrderPage = () => {
   }, [orderData.Sizes]);
 
   useEffect(() => {
-    if (orderData.Eye_Count === 'Duo iris') {
+    if (orderData.Eye_Count === 'Two Person') {
       setFilters((prev) => ({
         ...prev,
         Effects: ['Yin Yang effect', 'Infinity effect', 'Fusion effect', 'Pure effect', 'Explosion effect', 'Halo effect']
@@ -113,7 +113,7 @@ const AddOrderPage = () => {
       });
       setCustomerData({ name: '', address: '', contact: '', email: '' });
       setOrderData({
-        Eye_Count: 'Single iris',
+        Eye_Count: 'One Person',
         Print_Style: 'Paper-based print',
         Sizes: '20cmx20cm',
         Effects: 'Pure effect',
@@ -179,7 +179,7 @@ const AddOrderPage = () => {
                 onChange={(_, value) => handleSelectChange(key, value)}
                 value={orderData[key]}
                 renderInput={(params) => (
-                  <TextField {...params} label={key.replace(/_/g, ' ')} fullWidth sx={{ mb: 2 }} />
+                  <TextField {...params} label={key == 'Eye_Count' ? "Person Count" : key.replace(/_/g, ' ')} fullWidth sx={{ mb: 2 }} />
                 )}
               />
             ))}

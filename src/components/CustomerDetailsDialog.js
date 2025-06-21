@@ -8,7 +8,7 @@ import {
     TextField,
     Button,
     CircularProgress
-} from '@mui/material'; 
+} from '@mui/material';
 import { motion } from 'framer-motion';
 
 const CustomerDetailsDialog = ({ open, onClose, onSubmit, customerData, setCustomerData, loader }) => {
@@ -47,7 +47,7 @@ const CustomerDetailsDialog = ({ open, onClose, onSubmit, customerData, setCusto
             <DialogContent>
                 <Grid container spacing={2} sx={{ marginTop: '20px', justifyContent: 'center', alignItems: 'center' }}>
                     {fields.map((field) => {
-                        const label = field.charAt(0).toUpperCase() + field.slice(1);
+                        const label = field === 'contact' ? "Contact number" : field.charAt(0).toUpperCase() + field.slice(1);
                         const isMultiline = field === 'address';
                         const type =
                             field === 'email'
