@@ -50,7 +50,7 @@ const AddOrderPage = () => {
   const [errors, setErrors] = useState({});
   const [orderStatus, setOrderStatus] = useState({ open: false, message: '', type: '' });
   const [filters, setFilters] = useState({
-    Eye_Count: ['Single iris - One person', 'Duo iris - Two people', 'Trio iris - Three people', 'Quadruple iris - Four people Person'],
+    Eye_Count: ['Single iris - One person', 'Duo iris - Two people', 'Trio iris - Three people', 'Quadruple iris - Four people Person'],
     Print_Style: ['Paper-based print'],
     Sizes: ['20cmx20cm', '30cmx30cm', '40cmx40cm', '50cmx50cm'],
     Effects: ['Pure effect', 'Explosion effect', 'Halo effect', 'Dust effect'],
