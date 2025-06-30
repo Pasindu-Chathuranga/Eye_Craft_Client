@@ -39,7 +39,7 @@ const AddOrderPage = () => {
   const theme = useTheme();
   const [loading, setLoading] = useState(false);
   const [orderData, setOrderData] = useState({
-    Eye_Count: 'One Person',
+    Eye_Count: 'Single iris - One person',
     Print_Style: 'Paper-based print',
     Sizes: '20cmx20cm',
     Effects: 'Pure effect',
@@ -50,7 +50,7 @@ const AddOrderPage = () => {
   const [errors, setErrors] = useState({});
   const [orderStatus, setOrderStatus] = useState({ open: false, message: '', type: '' });
   const [filters, setFilters] = useState({
-    Eye_Count: ['One Person', 'Two Person', 'Three Person', 'Four Person'],
+    Eye_Count: ['Single iris - One person', 'Duo iris - Two people', 'Trio iris - Three people', 'Quadruple iris - Four people Person'],
     Print_Style: ['Paper-based print'],
     Sizes: ['20cmx20cm', '30cmx30cm', '40cmx40cm', '50cmx50cm'],
     Effects: ['Pure effect', 'Explosion effect', 'Halo effect', 'Dust effect'],
@@ -71,7 +71,7 @@ const AddOrderPage = () => {
   }, [orderData.Sizes]);
 
   useEffect(() => {
-    if (orderData.Eye_Count === 'Two Person') {
+    if (orderData.Eye_Count === 'Duo iris - Two people') {
       setFilters((prev) => ({
         ...prev,
         Effects: ['Yin Yang effect', 'Infinity effect', 'Fusion effect', 'Pure effect', 'Explosion effect', 'Halo effect']
@@ -113,7 +113,7 @@ const AddOrderPage = () => {
       });
       setCustomerData({ name: '', address: '', contact: '', email: '' });
       setOrderData({
-        Eye_Count: 'One Person',
+        Eye_Count: 'Single iris - One person',
         Print_Style: 'Paper-based print',
         Sizes: '20cmx20cm',
         Effects: 'Pure effect',
