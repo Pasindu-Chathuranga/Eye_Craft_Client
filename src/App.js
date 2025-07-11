@@ -17,8 +17,8 @@ import './App.css';
 import './theme/stars.css';
 import 'aos/dist/aos.css';
 import Navbar from './components/navBar/NavBar';
-import NavDrawer from './components/navBar/NavDrawer';
-
+import NavDrawer from './components/navBar/NavDrawer';  
+ 
 function App() {  
   const [drawerOpen, setDrawerOpen] = useState(false);
 

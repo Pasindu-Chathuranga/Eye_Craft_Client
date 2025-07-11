@@ -10,6 +10,7 @@ import {
     CircularProgress
 } from '@mui/material';
 import { motion } from 'framer-motion';
+import ReactPixel from 'react-facebook-pixel';
 
 const CustomerDetailsDialog = ({ open, onClose, onSubmit, customerData, setCustomerData, loader }) => {
     const fields = ['name', 'email', 'contact', 'address'];
@@ -37,6 +38,13 @@ const CustomerDetailsDialog = ({ open, onClose, onSubmit, customerData, setCusto
 
     const handleSubmit = () => {
         if (validate()) {
+            // 🔥 Facebook Pixel event trigger
+            ReactPixel.track('SubmitOrder', {
+                name: customerData.name,
+                email: customerData.email,
+                contact: customerData.contact
+            });
+
             onSubmit();
         }
     };
@@ -45,16 +53,13 @@ const CustomerDetailsDialog = ({ open, onClose, onSubmit, customerData, setCusto
         <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
             <DialogTitle textAlign="center">Enter Contact Details</DialogTitle>
             <DialogContent>
-                <Grid container spacing={2} sx={{ marginTop: '20px', justifyContent: 'center', alignItems: 'center' }}>
+                <Grid container spacing={2} sx={{ mt: 2, justifyContent: 'center', alignItems: 'center' }}>
                     {fields.map((field) => {
                         const label = field === 'contact' ? "Contact number" : field.charAt(0).toUpperCase() + field.slice(1);
                         const isMultiline = field === 'address';
                         const type =
-                            field === 'email'
-                                ? 'email'
-                                : field === 'contact'
-                                    ? 'tel'
-                                    : 'text';
+                            field === 'email' ? 'email' :
+                            field === 'contact' ? 'tel' : 'text';
 
                         return (
                             <TextField
