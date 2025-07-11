@@ -15,11 +15,12 @@ import StartBackground from './components/Stars';
 import Aos from 'aos';
 import logo from './assets/logos/logo-white.png'
 import 'aos/dist/aos.css';
+import useFacebookPixel from './helper/useFacebookPixel';
 
 function App() {
+  useFacebookPixel();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [showAppBar, setShowAppBar] = useState(true);
-
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
