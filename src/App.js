@@ -45,10 +45,9 @@ function App() {
         <Box
           id="connect-with-us"
           py={3}
-          bgcolor="#ffffff"
-          borderRadius={2}
-          px={3}
-          sx={{ marginTop: '3%' }}
+          bgcolor="#ffffff" 
+          px={2}
+          sx={{ marginTop: '3%' ,borderRadius:'10px 10px 0 0 '}}
         >
           <ContactUs />
         </Box>

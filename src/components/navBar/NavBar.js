@@ -21,7 +21,17 @@ const SECTIONS = [
 export default function Navbar({ logo, onMenuClick }) {
     return (
         <Slide direction="down" in mountOnEnter unmountOnExit>
-            <AppBar position="sticky" sx={{ bgcolor: '#0D0D0D', transition: 'all 0.3s ease' }}>
+            <AppBar
+                position="sticky"
+                sx={{
+                    bgcolor: '#0D0D0D',
+                    transition: 'all 0.3s ease',
+                    width: { xs: '100%', md: '63%' },
+                    borderRadius:'0 0 8px 8px',
+                    margin: { xs: 0, md: '0 auto' },
+                    boxShadow: 'none',
+                }}
+            >
                 <Toolbar>
                     <IconButton
                         edge="start"
