@@ -37,9 +37,8 @@ const CustomerDetailsDialog = ({ open, onClose, onSubmit, customerData, setCusto
     };
 
     const handleSubmit = () => {
-        if (validate()) {
-            // 🔥 Facebook Pixel event trigger
-            ReactPixel.track('SubmitOrder', {
+        if (validate()) { 
+            ReactPixel.track('customer clicked order submit button', {
                 name: customerData.name,
                 email: customerData.email,
                 contact: customerData.contact
