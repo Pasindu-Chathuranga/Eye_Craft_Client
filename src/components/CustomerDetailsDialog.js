@@ -38,7 +38,7 @@ const CustomerDetailsDialog = ({ open, onClose, onSubmit, customerData, setCusto
 
     const handleSubmit = () => {
         if (validate()) { 
-            ReactPixel.track('customer clicked order submit button', {
+            ReactPixel.track('Submit application', {
                 name: customerData.name,
                 email: customerData.email,
                 contact: customerData.contact
