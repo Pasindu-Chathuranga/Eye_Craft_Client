@@ -27,7 +27,7 @@ function App() {
       <Navbar logo={logo} onMenuClick={() => setDrawerOpen(true)} />
       <NavDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
 
-      <StartBackground />
+      {/* <StartBackground /> */}
 
       <Container sx={{ bgcolor: '#0D0D0D', zIndex: 99, position: 'relative' }}>
         <Box id="home" py={3}>
